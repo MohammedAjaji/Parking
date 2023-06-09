@@ -1,2 +1,9 @@
-package com.example.parking.Repository;public interface AdminRepository {
+package com.example.parking.Repository;
+
+import com.example.parking.Model.Admin;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AdminRepository extends JpaRepository<Admin, Integer> {
 }

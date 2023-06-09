@@ -1,2 +1,4 @@
-package com.example.parking.Configuration;public class SpringConfiguration {
+package com.example.parking.Configuration;
+
+public class SpringConfiguration {
 }
