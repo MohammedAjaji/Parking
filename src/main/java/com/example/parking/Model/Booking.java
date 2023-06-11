@@ -8,41 +8,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Parking {
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer parkingNumber;
 
-    private Boolean outdoor;
-    private Boolean handicap;
-
-    private Double price;
-
-
-    private Integer floor;
-
-    @OneToMany(mappedBy = "parking", cascade = CascadeType.DETACH)
-    @PrimaryKeyJoinColumn
-    private Set<Time> timeSet;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    private Customer customer;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "place_id",referencedColumnName = "id")
     private Place place;
-
-    @ManyToMany
-    @JsonIgnore
-    private Set<Car> carSet;
 
 
 

@@ -35,7 +35,7 @@ public class MyUser implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @PrimaryKeyJoinColumn
-    private Place place;
+    private Company company;
 
 
     @Override

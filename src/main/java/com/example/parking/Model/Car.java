@@ -15,35 +15,29 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Parking {
+public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer parkingNumber;
+    private String name;
 
-    private Boolean outdoor;
-    private Boolean handicap;
+    private String licensePlate;
 
-    private Double price;
+    private String color;
 
-
-    private Integer floor;
-
-    @OneToMany(mappedBy = "parking", cascade = CascadeType.DETACH)
-    @PrimaryKeyJoinColumn
-    private Set<Time> timeSet;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "place_id",referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    private Customer customer;
 
-    @ManyToMany
-    @JsonIgnore
-    private Set<Car> carSet;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.DETACH)
+    @PrimaryKeyJoinColumn
+    private Set<Time> timeSet;
 
-
+    @ManyToMany(mappedBy = "carSet")
+    private Set<Parking> parkingSet;
 
 }

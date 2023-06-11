@@ -15,37 +15,24 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNum;
-    private Boolean handicap;
+    private String name;
 
-    private Double balance;
+    private String status;
+
+    private Double revenue;
 
     @OneToOne
 //    @MapsId(value = "id")
     @JsonIgnore
     private MyUser user;
 
-
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.DETACH)
     @PrimaryKeyJoinColumn
-    private Set<Car> carSet;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.DETACH)
-    @PrimaryKeyJoinColumn
-    private Set<Booking> bookingSet;
-
-
-
-
-
+    private Set<Place> placeSet;
 }

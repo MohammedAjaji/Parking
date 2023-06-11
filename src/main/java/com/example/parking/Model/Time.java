@@ -35,6 +35,7 @@ public class Time {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
-    private Customer customer;
+    @JoinColumn(name = "car_id",referencedColumnName = "id")
+    private Car car;
+
 }

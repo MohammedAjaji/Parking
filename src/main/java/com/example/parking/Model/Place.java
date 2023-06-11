@@ -22,17 +22,21 @@ public class Place {
     private Integer id;
 
     private String name;
+    private String location;
     private String email;
     private String phoneNum;
 
-    private Double revenue;
-
-    @OneToOne
-//    @MapsId(value = "id")
-    @JsonIgnore
-    private MyUser user;
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.DETACH)
     @PrimaryKeyJoinColumn
     private Set<Parking> parkingSet;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "company_id",referencedColumnName = "id")
+    private Company company;
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.DETACH)
+    @PrimaryKeyJoinColumn
+    private Set<Booking> bookingSet;
 }
