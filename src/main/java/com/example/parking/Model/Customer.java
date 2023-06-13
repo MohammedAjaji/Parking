@@ -22,6 +22,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @NotEmpty(message = "first name must be not null")
     private String firstName;
     private String lastName;
