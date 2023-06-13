@@ -3,6 +3,8 @@ package com.example.parking.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +23,21 @@ public class Parking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "parking Number cannot be empty ")
+    @Column(columnDefinition = "varchar(10) not null")
     private String parkingNumber;
 
-    private Boolean outdoor;
-    private Boolean handicap;
+    private Boolean outdoor = true;
 
+    private Boolean handicap = false;
+
+    @Column(columnDefinition = "int not null")
+    private Integer floor;
+
+    @NotNull(message = "Price cannot be null")
+    @Column(columnDefinition = "decimal not null")
     private Double price;
 
-
-    private Integer floor;
 
     @OneToMany(mappedBy = "parking", cascade = CascadeType.DETACH)
     @PrimaryKeyJoinColumn
@@ -37,8 +45,8 @@ public class Parking {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "place_id",referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "branch_id",referencedColumnName = "id")
+    private Branch branch;
 
     @OneToMany(mappedBy = "parking", cascade = CascadeType.DETACH)
     @PrimaryKeyJoinColumn
