@@ -25,7 +25,10 @@ public class Time {
     private Integer id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime localDateTime;
+    private LocalDateTime arrivalTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime departureTime;
 
 
     @ManyToOne
@@ -33,9 +36,11 @@ public class Time {
     @JoinColumn(name = "parking_id",referencedColumnName = "id")
     private Parking parking;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "car_id",referencedColumnName = "id")
-    private Car car;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "time")
+    @PrimaryKeyJoinColumn
+    private Booking booking;
+
+
+
 
 }

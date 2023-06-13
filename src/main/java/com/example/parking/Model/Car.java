@@ -27,6 +27,9 @@ public class Car {
 
     private String color;
 
+    private Boolean handicap;
+
+
 
     @ManyToOne
     @JsonIgnore
@@ -35,9 +38,7 @@ public class Car {
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.DETACH)
     @PrimaryKeyJoinColumn
-    private Set<Time> timeSet;
+    private Set<Booking> bookingSet;
 
-    @ManyToMany(mappedBy = "carSet")
-    private Set<Parking> parkingSet;
 
 }

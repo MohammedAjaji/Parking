@@ -22,13 +22,18 @@ public class Booking {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
-    private Customer customer;
+    @JoinColumn(name = "car_id",referencedColumnName = "id")
+    private Car car;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "place_id",referencedColumnName = "id")
-    private Place place;
+    @JoinColumn(name = "parking_id",referencedColumnName = "id")
+    private Parking parking;
+
+    @OneToOne
+//    @MapsId(value = "id")
+    @JsonIgnore
+    private Time time;
 
 
 

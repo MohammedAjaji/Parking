@@ -36,7 +36,5 @@ public class Place {
     @JoinColumn(name = "company_id",referencedColumnName = "id")
     private Company company;
 
-    @OneToMany(mappedBy = "place", cascade = CascadeType.DETACH)
-    @PrimaryKeyJoinColumn
-    private Set<Booking> bookingSet;
+
 }

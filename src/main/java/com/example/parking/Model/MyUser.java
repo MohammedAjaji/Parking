@@ -23,6 +23,7 @@ public class MyUser implements UserDetails {
 
     private String username;
     private String password;
+    private String email;
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")

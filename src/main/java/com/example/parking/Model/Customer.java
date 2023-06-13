@@ -23,9 +23,8 @@ public class Customer {
 
     private String firstName;
     private String lastName;
-    private String email;
+
     private String phoneNum;
-    private Boolean handicap;
 
     private Double balance;
 
@@ -40,9 +39,7 @@ public class Customer {
     @PrimaryKeyJoinColumn
     private Set<Car> carSet;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.DETACH)
-    @PrimaryKeyJoinColumn
-    private Set<Booking> bookingSet;
+
 
 
 

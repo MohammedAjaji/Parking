@@ -21,7 +21,7 @@ public class Parking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer parkingNumber;
+    private String parkingNumber;
 
     private Boolean outdoor;
     private Boolean handicap;
@@ -40,9 +40,10 @@ public class Parking {
     @JoinColumn(name = "place_id",referencedColumnName = "id")
     private Place place;
 
-    @ManyToMany
-    @JsonIgnore
-    private Set<Car> carSet;
+    @OneToMany(mappedBy = "parking", cascade = CascadeType.DETACH)
+    @PrimaryKeyJoinColumn
+    private Set<Booking> bookingSet;
+
 
 
 
