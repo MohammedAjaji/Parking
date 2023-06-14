@@ -111,4 +111,13 @@ public class CompanyService {
         List<Branch> branches = branchRepository.findBranchesByCompany(company);
         return branches;
     }
+
+    //endpoint that takes company id and return All company details
+    public MyUser getCompanyDetails(MyUser user){
+        Company company= companyRepository.findCompanyByUser(user);
+        if(company==null){
+            throw new ApiException("company not found");
+        }
+        return user;
+    }
 }

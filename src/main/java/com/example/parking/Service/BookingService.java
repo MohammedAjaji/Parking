@@ -1,6 +1,7 @@
 package com.example.parking.Service;
 
 
+
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.BookingDTO;
 import com.example.parking.Model.*;
@@ -16,6 +17,7 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+
     private final BranchRepository branchRepository;
     private final ParkingRepository parkingRepository;
     private final CustomerRepository customerRepository;

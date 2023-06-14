@@ -2,10 +2,7 @@ package com.example.parking.Controller;
 
 
 import com.example.parking.DTO.CompanyDTO;
-import com.example.parking.Model.Branch;
-import com.example.parking.Model.Car;
-import com.example.parking.Model.Company;
-import com.example.parking.Model.MyUser;
+import com.example.parking.Model.*;
 import com.example.parking.Service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +49,12 @@ public class CompanyController {
         List<Branch> branches= companyService.getCompanyBranches(user);
         return ResponseEntity.status(200).body(branches);
     }
+
+    @GetMapping("/details")
+    public ResponseEntity getCompanyDetails(@AuthenticationPrincipal MyUser user){
+        MyUser myUser =companyService.getCompanyDetails(user);
+        return ResponseEntity.status(200).body(myUser);
+    }
+
 
 }
