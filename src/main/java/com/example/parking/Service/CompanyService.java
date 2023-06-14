@@ -88,4 +88,20 @@ public class CompanyService {
         companyRepository.delete(company);
         myUserRepository.delete(user);
     }
+
+    public void changeStatus(MyUser user, Integer companyId, String status){
+
+        if (!(user.getRole().equals("ADMIN"))){
+            throw new ApiException("Not Authorized");
+        }
+
+        Company company = companyRepository.findCompanyById(companyId);
+        if (company == null){
+            throw new ApiException("Company Not found");
+        }
+
+        company.setStatus(status);
+        companyRepository.save(company);
+
+    }
 }
