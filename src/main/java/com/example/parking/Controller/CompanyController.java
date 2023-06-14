@@ -2,6 +2,8 @@ package com.example.parking.Controller;
 
 
 import com.example.parking.DTO.CompanyDTO;
+import com.example.parking.Model.Branch;
+import com.example.parking.Model.Car;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Service.CompanyService;
@@ -43,6 +45,12 @@ public class CompanyController {
     public ResponseEntity changeStatus(@AuthenticationPrincipal MyUser user, @RequestBody String status, @PathVariable Integer companyId){
         companyService.changeStatus(user, companyId,status);
         return ResponseEntity.status(200).body("Company Status Updated");
-
     }
+
+    @GetMapping("/get-branch")
+    public ResponseEntity getCompanyBranches(@AuthenticationPrincipal MyUser user){
+        List<Branch> branches= companyService.getCompanyBranches(user);
+        return ResponseEntity.status(200).body(branches);
+    }
+
 }

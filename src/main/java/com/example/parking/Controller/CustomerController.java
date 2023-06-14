@@ -2,6 +2,7 @@ package com.example.parking.Controller;
 
 import com.example.parking.DTO.CompanyDTO;
 import com.example.parking.DTO.CustomerDTO;
+import com.example.parking.Model.Car;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.Customer;
 import com.example.parking.Model.MyUser;
@@ -37,6 +38,12 @@ public class CustomerController {
     public ResponseEntity deleteCustomer(@AuthenticationPrincipal MyUser user, @PathVariable Integer customerId){
         customerService.deleteCustomer(user,customerId);
         return ResponseEntity.status(200).body("Customer deleted");
+    }
+
+    @GetMapping("/get-cars")
+    public ResponseEntity getCustomrsCars(@AuthenticationPrincipal MyUser user){
+        List<Car> cars= customerService.getCustomrsCars(user);
+        return ResponseEntity.status(200).body(cars);
     }
 
 }
