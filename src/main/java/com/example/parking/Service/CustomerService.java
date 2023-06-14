@@ -2,9 +2,8 @@ package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.CustomerDTO;
-import com.example.parking.Model.Company;
-import com.example.parking.Model.Customer;
-import com.example.parking.Model.MyUser;
+import com.example.parking.Model.*;
+import com.example.parking.Repository.CarRepository;
 import com.example.parking.Repository.CustomerRepository;
 import com.example.parking.Repository.MyUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +19,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final MyUserRepository myUserRepository;
+    private final CarRepository carRepository;
 
 
     public List<Customer> getAllCustomer(){
@@ -68,17 +68,24 @@ public class CustomerService {
     }
 
     public void deleteCustomer(MyUser user,Integer customerId){
-        Customer oldCustomer = customerRepository.findCustomerById(customerId);
+        Customer customer = customerRepository.findCustomerById(customerId);
 
         if (!Objects.equals(user.getCustomer().getId(), customerId)){
             throw new ApiException("Not Authorized");
         }
 
-        if (oldCustomer == null){
+        if (customer == null){
             throw new ApiException("customer Not found");
         }
 
-        customerRepository.delete(oldCustomer);
+        List<Car> cars = carRepository.findCarByCustomer(customer);
+
+        for (int i = 0; i < cars.size(); i++) {
+            cars.get(i).setCustomer(null);
+            carRepository.delete(cars.get(i));
+        }
+
+        customerRepository.delete(customer);
         myUserRepository.delete(user);
 
     }
