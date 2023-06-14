@@ -1,10 +1,7 @@
 package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
-import com.example.parking.Model.Branch;
-import com.example.parking.Model.Company;
-import com.example.parking.Model.MyUser;
-import com.example.parking.Model.Parking;
+import com.example.parking.Model.*;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.ParkingRepository;
 import com.example.parking.Repository.BranchRepository;
@@ -92,4 +89,17 @@ public class ParkingService {
         parkingRepository.delete(parking);
 
     }
+
+    public List<Parking> getParkingByTime(Time time, Integer branchId){
+        Branch branch = branchRepository.findBranchById(branchId);
+        if (branch == null){
+            throw new ApiException("Branch not found");
+        }
+
+        List<Parking> parking = parkingRepository.findAllByTimeSetContainsAndBranch(time,branch);
+        return parking;
+    }
+
+
+
 }

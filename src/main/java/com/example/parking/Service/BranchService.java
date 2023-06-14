@@ -4,8 +4,10 @@ import com.example.parking.ApiException.ApiException;
 import com.example.parking.Model.Branch;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.MyUser;
+import com.example.parking.Model.Parking;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.BranchRepository;
+import com.example.parking.Repository.ParkingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class BranchService {
 
     private final BranchRepository branchRepository;
     private final CompanyRepository companyRepository;
+    private final ParkingRepository parkingRepository;
 
     public List<Branch> getBranches() {
         return branchRepository.findAll();
@@ -63,5 +66,17 @@ public class BranchService {
         }
 
         branchRepository.delete(branch);
+    }
+
+    public List<Parking> getParkingByBranch(Integer branchId){
+        Branch branch = branchRepository.findBranchById(branchId);
+        if (branch == null){
+            throw new ApiException("Branch Not Found");
+        }
+
+        List<Parking> parking = parkingRepository.findAllByBranch(branch);
+
+        return parking;
+
     }
 }
