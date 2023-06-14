@@ -2,10 +2,7 @@ package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.CompanyDTO;
-import com.example.parking.Model.Branch;
-import com.example.parking.Model.Company;
-import com.example.parking.Model.MyUser;
-import com.example.parking.Model.Parking;
+import com.example.parking.Model.*;
 import com.example.parking.Repository.BranchRepository;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.MyUserRepository;
@@ -104,5 +101,14 @@ public class CompanyService {
         companyRepository.save(company);
 
 
+    }
+
+    public List<Branch> getCompanyBranches(MyUser user){
+        Company company = companyRepository.findCompanyByUser(user);
+        if (company == null) {
+            throw new ApiException("Not Authorized");
+        }
+        List<Branch> branches = branchRepository.findBranchesByCompany(company);
+        return branches;
     }
 }
