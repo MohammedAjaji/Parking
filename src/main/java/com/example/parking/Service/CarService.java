@@ -1,8 +1,10 @@
 package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
-import com.example.parking.Model.Car;
+import com.example.parking.Model.*;
 import com.example.parking.Repository.CarRepository;
+import com.example.parking.Repository.CompanyRepository;
+import com.example.parking.Repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +15,34 @@ import java.util.List;
 public class CarService {
 
     private final CarRepository carRepository;
+    private final CustomerRepository customerRepository;
 
-    public List<Car> getAllCars() {
-        List<Car> cars = carRepository.findAll();
-        return cars;
+
+    public List<Car> getCars() {
+        return carRepository.findAll();
     }
 
-    public void addCar(Car car) {
+    public void addCar(MyUser user,Car car) {
+        Customer customer = customerRepository.findCustomerByUser(user);
+        if (customer == null){
+            throw new ApiException("Sorry Only Customer can add Car");
+        }
+        car.setCustomer(customer);
         carRepository.save(car);
     }
 
-    public void updateCar(Car car,Integer id){
-        Car oldCar= carRepository.findCarById(id);
+    public void updateCar(MyUser user,Car car,Integer carId){
 
-        if(oldCar==null){
-            throw new ApiException("Car not found");
+        Customer customer = customerRepository.findCustomerByUser(user);
+        if (car == null){
+            throw new ApiException("Sorry Only Customer can update car");
         }
+
+        Car oldCar = carRepository.findCarById(carId);
+        if (oldCar == null){
+            throw new ApiException("Car Not Found");
+        }
+
         oldCar.setName(car.getName());
         oldCar.setLicensePlate(car.getLicensePlate());
         oldCar.setColor(car.getColor());
@@ -37,12 +51,15 @@ public class CarService {
         carRepository.save(oldCar);
     }
 
-    public void deleteCar(Integer id){
-        Car car= carRepository.findCarById(id);
-        if(car==null){
-            throw new ApiException("Car not found");
+    public void deleteCar(MyUser user, Integer carId){
+        Customer customer= user.getCustomer();
+        if(customer==null){
+            throw new ApiException("Sorry Only Customers can delete Car");
         }
-
+        Car car = carRepository.findCarById(carId);
+        if (car == null){
+            throw new ApiException("Car Not Found");
+        }
         carRepository.delete(car);
     }
 
