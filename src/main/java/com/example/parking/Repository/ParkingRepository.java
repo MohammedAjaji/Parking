@@ -15,5 +15,7 @@ public interface ParkingRepository extends JpaRepository<Parking, Integer> {
 
     List<Parking> findAllByBranch(Branch branch);
 
+    Parking findParkingByParkingNumber(String number);
+
    List<Parking> findAllByTimeSetContainsAndBranch(Time time, Branch branch);
 }

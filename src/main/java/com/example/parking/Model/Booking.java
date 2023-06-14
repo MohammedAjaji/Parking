@@ -19,6 +19,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Double totalPrice;
+
 
     @ManyToOne
     @JsonIgnore

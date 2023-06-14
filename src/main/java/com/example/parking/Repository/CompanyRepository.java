@@ -1,5 +1,6 @@
 package com.example.parking.Repository;
 
+import com.example.parking.Model.Branch;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.Customer;
 import com.example.parking.Model.MyUser;
@@ -12,5 +13,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Company findCompanyById(Integer id);
 
     Company findCompanyByUser(MyUser user);
+
+    Company findCompanyByBranchSetContains(Branch branch);
 
 }
