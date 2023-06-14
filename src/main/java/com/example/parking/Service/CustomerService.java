@@ -33,13 +33,13 @@ public class CustomerService {
         MyUser user = new MyUser();
         user.setUsername(customerDTO.getUsername());
         user.setPassword(hash);
-        user.setRole("Customer");
+        user.setRole("CUSTOMER");
 
         Customer customer = new Customer();
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setPhoneNum(customerDTO.getPhoneNum());
-        customer.setBalance(0.0);
+        customer.setBalance(customerDTO.getBalance());
 
         user.setCustomer(customer);
 
@@ -79,6 +79,8 @@ public class CustomerService {
         }
 
         customerRepository.delete(oldCustomer);
+        myUserRepository.delete(user);
+
     }
 
 }

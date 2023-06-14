@@ -28,7 +28,7 @@ public class Time {
     private LocalDateTime arrivalTime;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime departureTime;
+    private LocalDateTime departureTime ;
 
 
     @ManyToOne

@@ -26,11 +26,6 @@ public class CompanyController {
         return ResponseEntity.status(200).body(companies);
     }
 
-    @PostMapping("add")
-    public ResponseEntity registerCompany(@Valid @RequestBody CompanyDTO companyDTO){
-        companyService.addCompany(companyDTO);
-        return ResponseEntity.status(200).body("Company Registered");
-    }
 
     @PutMapping("update/{companyId}")
     public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser user, @RequestBody CompanyDTO companyDTO, @PathVariable Integer companyId){

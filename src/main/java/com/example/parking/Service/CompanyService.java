@@ -2,10 +2,14 @@ package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.CompanyDTO;
+import com.example.parking.Model.Branch;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.MyUser;
+import com.example.parking.Model.Parking;
+import com.example.parking.Repository.BranchRepository;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.MyUserRepository;
+import com.example.parking.Repository.ParkingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final MyUserRepository myUserRepository;
+    private final BranchRepository branchRepository;
+    private final ParkingRepository parkingRepository;
 
     public List<Company> getCompanies(){
         return companyRepository.findAll();
@@ -72,7 +78,14 @@ public class CompanyService {
         if (company == null){
             throw new ApiException("Company Not found");
         }
+        List<Branch> branches = branchRepository.findBranchesByCompany(company);
+//        List<Parking> parkings =
+        for (int i = 0; i < branches.size(); i++) {
+            branches.get(i).setCompany(null);
+            branchRepository.delete(branches.get(i));
+        }
 
         companyRepository.delete(company);
+        myUserRepository.delete(user);
     }
 }
