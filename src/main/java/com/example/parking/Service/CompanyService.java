@@ -42,6 +42,7 @@ public class CompanyService {
         company.setStatus("Pending");
 
         user.setCompany(company);
+        company.setUser(user);
 
         myUserRepository.save(user);
         companyRepository.save(company);

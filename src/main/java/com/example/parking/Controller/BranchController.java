@@ -25,19 +25,19 @@ public class BranchController {
         return ResponseEntity.status(200).body(branches);
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResponseEntity addBranch(@AuthenticationPrincipal MyUser user,@Valid @RequestBody Branch branch){
         branchService.addBranch(user, branch);
         return ResponseEntity.status(200).body("Branch Added");
     }
 
-    @PutMapping("update/{branchId}")
+    @PutMapping("/update/{branchId}")
     public ResponseEntity updateBranch(@AuthenticationPrincipal MyUser user, @Valid @RequestBody Branch branch, @PathVariable Integer branchId){
         branchService.updateBranch(user, branch, branchId);
         return ResponseEntity.status(200).body("Branch Updated");
     }
 
-    @DeleteMapping("delete/{branchId}")
+    @DeleteMapping("/delete/{branchId}")
     public ResponseEntity deleteBranch(@AuthenticationPrincipal MyUser user, @PathVariable Integer branchId){
         branchService.deleteBranch(user,branchId);
         return ResponseEntity.status(200).body("Branch Deleted");

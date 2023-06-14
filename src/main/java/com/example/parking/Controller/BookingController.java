@@ -24,13 +24,13 @@ public class BookingController {
     }
 
     @PutMapping("/update/{bookingId}")
-    public ResponseEntity updateParking(@AuthenticationPrincipal MyUser user, @Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer bookingId){
+    public ResponseEntity updateBooking(@AuthenticationPrincipal MyUser user, @Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer bookingId){
         bookingService.updateBookingParking(user, bookingDTO,bookingId);
         return ResponseEntity.status(200).body("Booking updated");
     }
 
-    @DeleteMapping("/update/{bookingId}")
-    public ResponseEntity updateParking(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
+    @DeleteMapping("/cancel/{bookingId}")
+    public ResponseEntity cancelBooking(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
         bookingService.cancelBookingParking(user,bookingId);
         return ResponseEntity.status(200).body("Booking Cancel");
     }

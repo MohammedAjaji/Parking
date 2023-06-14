@@ -36,7 +36,7 @@ public class Car {
     @Column(columnDefinition = "varchar(20) not null")
     private String color;
 
-    private Boolean handicap;
+    private Boolean handicap = false;
 
 
 
