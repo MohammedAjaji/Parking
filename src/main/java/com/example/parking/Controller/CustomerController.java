@@ -27,14 +27,6 @@ public class CustomerController {
         return ResponseEntity.status(200).body(customers);
     }
 
-
-    @PostMapping("add")
-    public ResponseEntity registerCustomer(@Valid @RequestBody CustomerDTO customerDTO){
-        customerService.addCustomer(customerDTO);
-        return ResponseEntity.status(200).body("Customer Registered");
-    }
-
-
     @PutMapping("update/{customerId}")
     public ResponseEntity updateCustomer(@AuthenticationPrincipal MyUser user, @PathVariable Integer customerId,@RequestBody CustomerDTO customerDTO){
         customerService.updateCustomer(user, customerId, customerDTO);
