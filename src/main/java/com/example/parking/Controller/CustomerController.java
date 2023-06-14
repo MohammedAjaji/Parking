@@ -1,10 +1,15 @@
 package com.example.parking.Controller;
 
+import com.example.parking.DTO.CompanyDTO;
+import com.example.parking.DTO.CustomerDTO;
+import com.example.parking.Model.Company;
 import com.example.parking.Model.Customer;
+import com.example.parking.Model.MyUser;
 import com.example.parking.Service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,24 +27,24 @@ public class CustomerController {
         return ResponseEntity.status(200).body(customers);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addCustomer(@RequestBody Customer customer){
-        customerService.addCustomer(customer);
-        return ResponseEntity.status(200).body("Customer added");
+
+    @PostMapping("add")
+    public ResponseEntity registerCustomer(@Valid @RequestBody CustomerDTO customerDTO){
+        customerService.addCustomer(customerDTO);
+        return ResponseEntity.status(200).body("Customer Registered");
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity updateCustomer(@PathVariable Integer id, @RequestBody@Valid Customer customer){
-        customerService.updateCustomer(id,customer);
-        return ResponseEntity.status(200).body("Customer updated");
+
+    @PutMapping("update/{customerId}")
+    public ResponseEntity updateCustomer(@AuthenticationPrincipal MyUser user, @PathVariable Integer customerId,@RequestBody CustomerDTO customerDTO){
+        customerService.updateCustomer(user, customerId, customerDTO);
+        return ResponseEntity.status(200).body("Customer Updated");
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteCustomer(@PathVariable Integer id){
-        customerService.deleteCustomer(id);
+    @DeleteMapping("/delete/{customerId}")
+    public ResponseEntity deleteCustomer(@AuthenticationPrincipal MyUser user, @PathVariable Integer customerId){
+        customerService.deleteCustomer(user,customerId);
         return ResponseEntity.status(200).body("Customer deleted");
-
     }
-
 
 }
