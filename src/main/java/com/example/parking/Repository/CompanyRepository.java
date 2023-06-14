@@ -11,4 +11,5 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Company findCompanyById(Integer id);
 
     Company findCompanyByUser(MyUser user);
+
 }
