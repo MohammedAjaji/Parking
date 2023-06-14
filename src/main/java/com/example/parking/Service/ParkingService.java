@@ -1,13 +1,16 @@
 package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
+import com.example.parking.DTO.BookingDTO;
 import com.example.parking.Model.*;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.ParkingRepository;
 import com.example.parking.Repository.BranchRepository;
+import com.example.parking.Repository.TimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +20,7 @@ public class ParkingService {
     private final ParkingRepository parkingRepository;
     private final BranchRepository branchRepository;
     private final CompanyRepository companyRepository;
+    private final TimeRepository timeRepository;
 
 
     public List<Parking> getParking() {
@@ -90,13 +94,23 @@ public class ParkingService {
 
     }
 
-    public List<Parking> getParkingByTime(Time time, Integer branchId){
+    public List<Parking> getParkingByTime(BookingDTO bookingDTO, Integer branchId){
         Branch branch = branchRepository.findBranchById(branchId);
         if (branch == null){
             throw new ApiException("Branch not found");
         }
+//        Time time = timeRepository.findTimeByArrivalTimeAndDepartureTime(bookingDTO.getArrivalTime(), bookingDTO.getDepartureTime());
+//        if (time == null){
+//            throw new ApiException("time not found");
+//        }
+        List<Time> times = timeRepository.findAvailableTimes(bookingDTO.getArrivalTime(), bookingDTO.getDepartureTime());
+        List<Parking> parking = new ArrayList<>();
+        for (int i = 0; i < times.size(); i++) {
+            if (times.get(i).getParking().getBranch().getId().equals(branchId)){
+                parking.add(times.get(i).getParking());
+            }
 
-        List<Parking> parking = parkingRepository.findAllByTimeSetContainsAndBranch(time,branch);
+        }
         return parking;
     }
 

@@ -32,7 +32,7 @@ public class BookingService {
         }
 
         Parking parking = parkingRepository.findParkingByParkingNumber(bookingDTO.getParkingNumber());
-        if (branch == null){
+        if (parking == null){
             throw new ApiException("Parking Not Found");
         }
         List<Time> times = timeRepository.findAllByParking(parking);
@@ -95,7 +95,7 @@ public class BookingService {
         }
 
         Parking parking = parkingRepository.findParkingByParkingNumber(bookingDTO.getParkingNumber());
-        if (branch == null){
+        if (parking == null){
             throw new ApiException("Parking Not Found");
         }
         List<Time> times = timeRepository.findAllByParking(parking);

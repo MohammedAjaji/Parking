@@ -1,13 +1,16 @@
 package com.example.parking.Controller;
 
 
+import com.example.parking.DTO.BookingDTO;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Model.Parking;
+import com.example.parking.Model.Time;
 import com.example.parking.Service.ParkingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +44,12 @@ public class ParkingController {
     public ResponseEntity deleteParking(@AuthenticationPrincipal MyUser user, @PathVariable Integer branchId,@PathVariable Integer parkingId){
         parkingService.deleteParking(user, branchId,parkingId);
         return ResponseEntity.status(200).body("Parking Deleted");
+    }
+
+    @GetMapping("/get-time/{branchId}")
+    public ResponseEntity getParkingByTime(@Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer branchId){
+        System.out.println("+++++++++++++++++++++++++++++++++++");
+        List<Parking> parking = parkingService.getParkingByTime(bookingDTO,branchId);
+        return ResponseEntity.status(200).body(parking);
     }
 }
