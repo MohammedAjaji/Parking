@@ -12,14 +12,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyUserService {
 
-    MyUserRepository myUserRepository;
+    private final MyUserRepository myUserRepository;
 
 
     public List<MyUser> getUsers() {
-        return myUserRepository.findAll();
+       List<MyUser> users = myUserRepository.findAll();
+        return users;
     }
 
     public void addAdmin(MyUser user) {
+        String hash = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(hash);
+        user.setRole("ADMIN");
         myUserRepository.save(user);
     }
 

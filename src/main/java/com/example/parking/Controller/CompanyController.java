@@ -26,19 +26,19 @@ public class CompanyController {
     }
 
 
-    @PutMapping("update/{companyId}")
+    @PutMapping("/update/{companyId}")
     public ResponseEntity updateCompany(@AuthenticationPrincipal MyUser user, @RequestBody CompanyDTO companyDTO, @PathVariable Integer companyId){
         companyService.updateCompany(user, companyDTO, companyId);
         return ResponseEntity.status(200).body("Company Updated");
     }
 
-    @DeleteMapping("delete/{companyId}")
+    @DeleteMapping("/delete/{companyId}")
     public ResponseEntity deleteCompany(@AuthenticationPrincipal MyUser user, @PathVariable Integer companyId){
         companyService.deleteCompany(user,companyId);
         return ResponseEntity.status(200).body("Company Deleted");
     }
 
-    @PutMapping("update-status/{companyId}")
+    @PutMapping("/update-status/{companyId}")
     public ResponseEntity changeStatus(@AuthenticationPrincipal MyUser user, @RequestBody String status, @PathVariable Integer companyId){
         companyService.changeStatus(user, companyId,status);
         return ResponseEntity.status(200).body("Company Status Updated");

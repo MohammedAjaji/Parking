@@ -17,7 +17,6 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
-
     private final BranchRepository branchRepository;
     private final ParkingRepository parkingRepository;
     private final CustomerRepository customerRepository;
@@ -56,6 +55,7 @@ public class BookingService {
         Time time = new Time();
         time.setArrivalTime(bookingDTO.getArrivalTime());
         time.setDepartureTime(bookingDTO.getDepartureTime());
+        time.setParking(parking);
         timeRepository.save(time);
 
         Integer totalHours =time.getDepartureTime().getHour() - time.getArrivalTime().getHour();
@@ -118,6 +118,7 @@ public class BookingService {
         Time time = booking.getTime();
         time.setArrivalTime(bookingDTO.getArrivalTime());
         time.setDepartureTime(bookingDTO.getDepartureTime());
+        time.setParking(parking);
         timeRepository.save(time);
 
         Integer totalHours =time.getDepartureTime().getHour() - time.getArrivalTime().getHour();
@@ -168,6 +169,8 @@ public class BookingService {
 
         company.setRevenue(company.getRevenue() - price);
         Time time = booking.getTime();
+        time.setParking(null);
+
         booking.setTime(null);
         timeRepository.delete(time);
         bookingRepository.delete(booking);

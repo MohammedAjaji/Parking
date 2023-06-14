@@ -35,6 +35,7 @@ public class CustomerService {
         MyUser user = new MyUser();
         user.setUsername(customerDTO.getUsername());
         user.setPassword(hash);
+        user.setEmail(customerDTO.getEmail());
         user.setRole("CUSTOMER");
 
         Customer customer = new Customer();
@@ -44,6 +45,7 @@ public class CustomerService {
         customer.setBalance(customerDTO.getBalance());
 
         user.setCustomer(customer);
+        customer.setUser(user);
 
         myUserRepository.save(user);
         customerRepository.save(customer);

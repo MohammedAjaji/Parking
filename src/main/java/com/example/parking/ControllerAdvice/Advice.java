@@ -15,4 +15,10 @@ public class Advice {
         String message = exception.getMessage();
         return ResponseEntity.status(400).body(new ApiResponse(message));
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity NullPointerException(NullPointerException exception){
+        String message = exception.getMessage();
+        return ResponseEntity.status(400).body(new ApiResponse(message));
+    }
 }
