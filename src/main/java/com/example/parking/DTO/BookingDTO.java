@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookingDTO {
 
-    private String carName;
+    private Integer carId;
+    private Integer branchId;
     private String parkingNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")

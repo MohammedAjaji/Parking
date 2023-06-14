@@ -1,5 +1,6 @@
 package com.example.parking.Repository;
 
+import com.example.parking.Model.Branch;
 import com.example.parking.Model.Company;
 import com.example.parking.Model.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Company findCompanyById(Integer id);
 
     Company findCompanyByUser(MyUser user);
+
+    Company findCompanyByBranchSetContains(Branch branch);
 
 }
