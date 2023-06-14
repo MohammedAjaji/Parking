@@ -46,4 +46,10 @@ public class CustomerController {
         return ResponseEntity.status(200).body(cars);
     }
 
+    @GetMapping("/details")
+    public ResponseEntity getCustomerDetails(@AuthenticationPrincipal MyUser user){
+        MyUser myUser =customerService.getCustomerDetails(user);
+        return ResponseEntity.status(200).body(myUser);
+    }
+
 }

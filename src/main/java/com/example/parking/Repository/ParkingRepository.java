@@ -12,6 +12,7 @@ import java.util.List;
 public interface ParkingRepository extends JpaRepository<Parking, Integer> {
 
     Parking findParkingById(Integer id);
+
     List<Parking> findAllByBranch(Branch branch);
 
    List<Parking> findAllByTimeSetContainsAndBranch(Time time, Branch branch);

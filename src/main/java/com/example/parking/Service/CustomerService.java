@@ -3,6 +3,7 @@ package com.example.parking.Service;
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.CustomerDTO;
 import com.example.parking.Model.*;
+import com.example.parking.Repository.BookingRepository;
 import com.example.parking.Repository.CarRepository;
 import com.example.parking.Repository.CustomerRepository;
 import com.example.parking.Repository.MyUserRepository;
@@ -20,6 +21,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final MyUserRepository myUserRepository;
     private final CarRepository carRepository;
+    private final BookingRepository bookingRepository;
 
 
     public List<Customer> getAllCustomer(){
@@ -98,5 +100,27 @@ public class CustomerService {
         List<Car> cars = carRepository.findCarByCustomer(customer);
         return cars;
     }
+
+    //endpoint that takes customer id and return All customer details
+    public MyUser getCustomerDetails(MyUser user){
+        Customer customer= customerRepository.findCustomerByUser(user);
+        if(customer==null){
+            throw new ApiException("customer not found");
+        }
+        return user;
+    }
+
+//    public List<Booking> getCustomerBooking(MyUser user){
+//        Customer customer = customerRepository.findCustomerByUser(user);
+//        if (customer == null) {
+//            throw new ApiException("Not Authorized");
+//        }
+//        List<Car> cars = carRepository.findCarByCustomer(customer);
+//        for (int i = 0; i < cars.size(); i++) {
+//            List<Booking> booking = bookingRepository.findBookingByCar(cars.get(i));
+//
+//        }
+//
+//    }
 
 }
