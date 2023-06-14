@@ -42,7 +42,7 @@ public class CustomerController {
 
     @GetMapping("/get-cars")
     public ResponseEntity getCustomrsCars(@AuthenticationPrincipal MyUser user){
-        List<Car> cars= customerService.getCustomrsCars(user);
+        List<Car> cars= customerService.getCustomrCars(user);
         return ResponseEntity.status(200).body(cars);
     }
 

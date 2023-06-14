@@ -90,7 +90,7 @@ public class CustomerService {
 
     }
 
-    public List<Car> getCustomrsCars(MyUser user){
+    public List<Car> getCustomrCars(MyUser user){
         Customer customer = customerRepository.findCustomerByUser(user);
         if (customer == null) {
             throw new ApiException("Not Authorized");
