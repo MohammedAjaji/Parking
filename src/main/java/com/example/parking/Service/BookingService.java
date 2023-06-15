@@ -54,6 +54,12 @@ public class BookingService {
             throw new ApiException("Car Not Found");
         }
 
+        if (!car.getHandicap() && parking.getHandicap()){
+            throw new ApiException("Sorry Parking is only for handicap");
+        }
+
+
+
         LocalDateTime localDateTime = LocalDateTime.now();
 
         if (localDateTime.isAfter(bookingDTO.getArrivalTime())){
@@ -68,6 +74,9 @@ public class BookingService {
 
         Integer totalHours =time.getDepartureTime().getHour() - time.getArrivalTime().getHour();
         Double totalPrice = parking.getPrice() * totalHours;
+        if (parking.getHandicap()){
+            totalPrice = 0.0;
+        }
 
         Customer customer = customerRepository.findCustomerByUser(user);
         customer.setBalance(customer.getBalance() - totalPrice);
@@ -124,6 +133,11 @@ public class BookingService {
             throw new ApiException("Car Not Found");
         }
 
+
+        if (!car.getHandicap() && parking.getHandicap()){
+            throw new ApiException("Sorry Parking is only for handicap");
+        }
+
         Time time = booking.getTime();
         time.setArrivalTime(bookingDTO.getArrivalTime());
         time.setDepartureTime(bookingDTO.getDepartureTime());
@@ -135,6 +149,10 @@ public class BookingService {
 
 
         Company company = companyRepository.findCompanyByBranchSetContains(branch);
+
+        if (parking.getHandicap()){
+            totalPrice = 0.0;
+        }
 
         if (totalPrice > booking.getTotalPrice()){
             Double sum = totalPrice - booking.getTotalPrice();
