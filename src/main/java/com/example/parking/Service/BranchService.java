@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,10 @@ public class BranchService {
         if (company == null){
             throw new ApiException("Sorry Only Companies can add Branch");
         }
+        if (!(company.getStatus().equalsIgnoreCase("approved"))){
+            throw new ApiException("Company not been approved");
+        }
+
         branch.setCompany(company);
         branchRepository.save(branch);
 
@@ -44,6 +49,10 @@ public class BranchService {
         Branch oldBranch = branchRepository.findBranchById(branchId);
         if (oldBranch == null){
             throw new ApiException("Branch Not Found");
+        }
+
+        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+            throw new ApiException("Not Authorized");
         }
 
         oldBranch.setName(branch.getName());
@@ -63,6 +72,9 @@ public class BranchService {
         Branch branch = branchRepository.findBranchById(branchId);
         if (branch == null){
             throw new ApiException("Branch Not Found");
+        }
+        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+            throw new ApiException("Not Authorized");
         }
 
         branchRepository.delete(branch);

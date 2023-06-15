@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class ParkingService {
     public void addParking(MyUser user, Integer branchId, Parking parking) {
         Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
-            throw new ApiException("Sorry Only Companies can add Branch");
+            throw new ApiException("Sorry Only Companies can add parking to  Branch");
         }
 
         Branch branch =branchRepository.findBranchById(branchId);
@@ -47,12 +48,16 @@ public class ParkingService {
     public void updateParking(MyUser user, Parking parking, Integer branchId, Integer parkingId) {
         Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
-            throw new ApiException("Sorry Only Companies can add Branch");
+            throw new ApiException("Sorry Only Companies can update Parking");
         }
 
         Branch branch = branchRepository.findBranchById(branchId);
         if (branch == null){
             throw new ApiException("Branch Not Found");
+        }
+
+        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+            throw new ApiException("Not Authorized");
         }
 
         Parking oldParking = parkingRepository.findParkingById(parkingId);
@@ -83,6 +88,10 @@ public class ParkingService {
         Branch branch = branchRepository.findBranchById(branchId);
         if (branch == null){
             throw new ApiException("Branch Not Found");
+        }
+
+        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+            throw new ApiException("Not Authorized");
         }
 
         Parking parking = parkingRepository.findParkingById(parkingId);

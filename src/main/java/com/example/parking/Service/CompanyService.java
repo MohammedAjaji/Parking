@@ -3,14 +3,12 @@ package com.example.parking.Service;
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.CompanyDTO;
 import com.example.parking.Model.*;
-import com.example.parking.Repository.BranchRepository;
-import com.example.parking.Repository.CompanyRepository;
-import com.example.parking.Repository.MyUserRepository;
-import com.example.parking.Repository.ParkingRepository;
+import com.example.parking.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +20,7 @@ public class CompanyService {
     private final MyUserRepository myUserRepository;
     private final BranchRepository branchRepository;
     private final ParkingRepository parkingRepository;
+    private final BookingRepository bookingRepository;
 
     public List<Company> getCompanies(){
         return companyRepository.findAll();
@@ -69,6 +68,7 @@ public class CompanyService {
     public void deleteCompany(MyUser user, Integer companyId){
         Company company = companyRepository.findCompanyById(companyId);
 
+
         if (!Objects.equals(user.getCompany().getId(), companyId)){
             throw new ApiException("Not Authorized");
         }
@@ -77,8 +77,19 @@ public class CompanyService {
             throw new ApiException("Company Not found");
         }
         List<Branch> branches = branchRepository.findBranchesByCompany(company);
-//        List<Parking> parkings =
+
         for (int i = 0; i < branches.size(); i++) {
+            List<Parking> parking = parkingRepository.findAllByBranch(branches.get(i));
+            for (int j = 0; j < parking.size(); j++) {
+                List<Booking> bookings = bookingRepository.findAllByParking(parking.get(i));
+                for (int k = 0; k < bookings.size(); k++) {
+                    if (bookings.get(i).getStatus().equalsIgnoreCase("new")){
+                        throw new ApiException("Cannot Delete Company where there are Bookings");
+                    }
+
+                }
+
+            }
             branches.get(i).setCompany(null);
             branchRepository.delete(branches.get(i));
         }
