@@ -21,6 +21,8 @@ public class Booking {
 
     private Double totalPrice;
 
+    private String status;
+
 
     @ManyToOne
     @JsonIgnore

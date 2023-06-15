@@ -24,7 +24,9 @@ public class BookingService {
     private final TimeRepository timeRepository;
     private final CompanyRepository companyRepository;
 
-
+/*
+        get Bookings BookingDTO
+ */
     public void bookingParking(MyUser user, BookingDTO bookingDTO){
         Branch branch = branchRepository.findBranchById(bookingDTO.getBranchId());
         if (branch == null){
@@ -52,6 +54,12 @@ public class BookingService {
             throw new ApiException("Car Not Found");
         }
 
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        if (localDateTime.isAfter(bookingDTO.getArrivalTime())){
+            throw new ApiException("Cannot Booking");
+        }
+
         Time time = new Time();
         time.setArrivalTime(bookingDTO.getArrivalTime());
         time.setDepartureTime(bookingDTO.getDepartureTime());
@@ -72,6 +80,7 @@ public class BookingService {
         booking.setTime(time);
         booking.setCar(car);
         booking.setTotalPrice(totalPrice);
+        booking.setStatus("new");
 
         bookingRepository.save(booking);
     }
@@ -176,6 +185,19 @@ public class BookingService {
         bookingRepository.delete(booking);
 
     }
+
+    public void checkOut(MyUser user,Integer bookingId){
+        Booking booking = bookingRepository.findBookingById(bookingId);
+        Customer customer = customerRepository.findCustomerByUser(user);
+        if(!(customer.getId().equals(booking.getCar().getCustomer().getId()))){
+            throw new ApiException("Not Authorized");
+        }
+
+        booking.setStatus("expired");
+        bookingRepository.save(booking);
+    }
+
+//    public void
 
 
 
