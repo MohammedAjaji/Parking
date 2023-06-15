@@ -48,8 +48,19 @@ public class ParkingController {
 
     @GetMapping("/get-time/{branchId}")
     public ResponseEntity getParkingByTime(@Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer branchId){
-        System.out.println("+++++++++++++++++++++++++++++++++++");
         List<Parking> parking = parkingService.getParkingByTime(bookingDTO,branchId);
         return ResponseEntity.status(200).body(parking);
+    }
+
+    @GetMapping("/get-not-available/{branchId}")
+    public ResponseEntity getNotAvailableParking(@Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer branchId){
+     Integer num = parkingService.getNotAvailableParking(bookingDTO,branchId);
+     return ResponseEntity.status(200).body(num);
+    }
+
+    @GetMapping("/get-available/{branchId}")
+    public ResponseEntity getAvailableParking(@Valid @RequestBody BookingDTO bookingDTO, @PathVariable Integer branchId){
+        Integer num = parkingService.getAvailableParking(bookingDTO,branchId);
+        return ResponseEntity.status(200).body(num);
     }
 }
