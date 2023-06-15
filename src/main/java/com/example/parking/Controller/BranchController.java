@@ -20,6 +20,7 @@ public class BranchController {
 
     private final BranchService branchService;
 
+    //all
     @GetMapping("/get")
     public ResponseEntity getBranches(){
         List<Branch> branches = branchService.getBranches();
@@ -44,6 +45,7 @@ public class BranchController {
         return ResponseEntity.status(200).body("Branch Deleted");
     }
 
+    // all
     @GetMapping("/get-parking/{branchId}")
     public ResponseEntity getParkingByBranch(@PathVariable Integer branchId){
         List<Parking> parking = branchService.getParkingByBranch(branchId);
