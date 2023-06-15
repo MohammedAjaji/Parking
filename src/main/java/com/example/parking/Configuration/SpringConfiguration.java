@@ -35,6 +35,37 @@ public class SpringConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
+                .requestMatchers("api/v1/auth/register").permitAll()
+                .requestMatchers("api/v1/auth/admin",
+                        "api/v1/auth/get-users",
+                        "api/v1/customer/get",
+                        "api/v1/car/get",
+                        "api/v1/company/get",
+                        "api/v1/company/delete/{companyId}",
+                        "api/v1/company/update-status/{companyId}").hasAuthority("ADMIN")
+                .requestMatchers("api/v1/auth/customer",
+                        "api/v1/customer/update/{customerId}",
+                        "api/v1/customer/delete/{customerId}",
+                        "api/v1/customer/get-cars",
+                        "api/v1/customer/details",
+                        "api/v1/car/add",
+                        "api/v1/car/update/{carId}",
+                        "api/v1/car/delete/carId}",
+                        "api/v1/booking/parking",
+                        "api/v1/booking/update/{bookingId}",
+                        "api/v1/booking/cancel/{bookingId}",
+                        "api/v1/booking/checkout/{bookingId}",
+                        "api/v1/booking/checkout/{bookingId}").hasAuthority("CUSTOMER")
+                .requestMatchers("api/v1/auth/company",
+                        "api/v1/company/update/{companyId}",
+                        "api/v1/company/get-branch",
+                        "api/v1/company/details",
+                        "api/v1/branch/add",
+                        "api/v1/branch/update/{branchId}",
+                        "api/v1/branch/delete/{branchId}",
+                        "api/v1/parking/add/{branchId}",
+                        "api/v1/parking/update/{branchId}/{parkingId}",
+                        "api/v1/parking/delete/{branchId}/{parkingId}").hasAuthority("COMPANY")
                 .anyRequest().permitAll()
                 .and()
                 .logout().logoutUrl("api/v1/auth/logout")
