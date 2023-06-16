@@ -35,7 +35,7 @@ public class Booking {
     private Parking parking;
 
     @OneToOne
-//    @MapsId(value = "id")
+    @MapsId
     @JsonIgnore
     private Time time;
 

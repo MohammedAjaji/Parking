@@ -41,7 +41,7 @@ public class Branch {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "company_id",referencedColumnName = "id")
+    @JoinColumn(name = "company_id",referencedColumnName = "user_id")
     private Company company;
 
 

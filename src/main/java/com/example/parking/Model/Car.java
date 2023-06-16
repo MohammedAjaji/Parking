@@ -42,7 +42,7 @@ public class Car {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    @JoinColumn(name = "customer_id",referencedColumnName = "user_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.DETACH)
