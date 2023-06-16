@@ -21,7 +21,7 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "first name should not be empty")
@@ -42,7 +42,7 @@ public class Customer {
     private Double balance;
 
     @OneToOne
-//    @MapsId(value = "id")
+    @MapsId
     @JsonIgnore
     private MyUser user;
 

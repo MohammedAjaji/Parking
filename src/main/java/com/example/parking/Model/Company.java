@@ -19,7 +19,7 @@ import java.util.Set;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "name cannot be empty ")
@@ -33,7 +33,7 @@ public class Company {
     private Double revenue;
 
     @OneToOne
-//    @MapsId(value = "id")
+    @MapsId
     @JsonIgnore
     private MyUser user;
 
