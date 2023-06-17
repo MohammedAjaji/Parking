@@ -21,7 +21,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final MyUserRepository myUserRepository;
     private final CarRepository carRepository;
-    private final BookingRepository bookingRepository;
+
 
 
     public List<Customer> getAllCustomer(){
@@ -29,7 +29,7 @@ public class CustomerService {
         return customers;
     }
 
-    public void addCustomer(CustomerDTO customerDTO){
+    public Customer addCustomer(CustomerDTO customerDTO){
 
         String hash = new BCryptPasswordEncoder().encode(customerDTO.getPassword());
         MyUser user = new MyUser();
@@ -48,7 +48,7 @@ public class CustomerService {
         customer.setUser(user);
 
         myUserRepository.save(user);
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
 

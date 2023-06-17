@@ -26,7 +26,7 @@ public class BranchService {
         return branchRepository.findAll();
     }
 
-    public void addBranch(MyUser user, Branch branch) {
+    public Branch addBranch(MyUser user, Branch branch) {
         Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
             throw new ApiException("Sorry Only Companies can add Branch");
@@ -36,7 +36,7 @@ public class BranchService {
         }
 
         branch.setCompany(company);
-        branchRepository.save(branch);
+        return branchRepository.save(branch);
 
     }
 
@@ -64,7 +64,7 @@ public class BranchService {
     }
 
     public void deleteBranch(MyUser user, Integer branchId) {
-        Company company = user.getCompany();
+        Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
             throw new ApiException("Sorry Only Companies can delete Branch");
         }
