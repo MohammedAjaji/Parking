@@ -44,8 +44,9 @@ public class CompanyService {
         company.setUser(user);
 
         myUserRepository.save(user);
-        companyRepository.save(company);
-        return companyRepository.save(company);
+//         companyRepository.save(company);
+//         return companyRepository.save(company);
+       return companyRepository.save(company);
     }
 
     public void updateCompany(MyUser user, CompanyDTO companyDTO, Integer companyId){

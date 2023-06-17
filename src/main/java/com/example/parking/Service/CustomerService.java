@@ -21,7 +21,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final MyUserRepository myUserRepository;
     private final CarRepository carRepository;
-    private final BookingRepository bookingRepository;
+
 
 
     public List<Customer> getAllCustomer(){
@@ -48,7 +48,7 @@ public class CustomerService {
         customer.setUser(user);
 
         myUserRepository.save(user);
-        customerRepository.save(customer);
+//         customerRepository.save(customer);
         return customerRepository.save(customer);
     }
 
