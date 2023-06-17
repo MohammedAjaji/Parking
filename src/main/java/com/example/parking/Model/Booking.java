@@ -34,9 +34,9 @@ public class Booking {
     @JoinColumn(name = "parking_id",referencedColumnName = "id")
     private Parking parking;
 
-    @OneToOne
-    @MapsId
-    @JsonIgnore
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "booking")
+    @PrimaryKeyJoinColumn
     private Time time;
 
 

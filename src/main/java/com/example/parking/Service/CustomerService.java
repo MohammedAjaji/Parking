@@ -48,6 +48,7 @@ public class CustomerService {
         customer.setUser(user);
 
         myUserRepository.save(user);
+//         customerRepository.save(customer);
         return customerRepository.save(customer);
     }
 
@@ -85,6 +86,13 @@ public class CustomerService {
         List<Car> cars = carRepository.findCarByCustomer(customer);
 
         for (int i = 0; i < cars.size(); i++) {
+            List<Booking> bookings = bookingRepository.findAllByCar(cars.get(i));
+            for (int k = 0; k < bookings.size(); k++) {
+                if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")) {
+                    throw new ApiException("Cannot Delete cars where there are Bookings");
+                }
+                bookings.get(k).setParking(null);
+            }
             cars.get(i).setCustomer(null);
             carRepository.delete(cars.get(i));
         }

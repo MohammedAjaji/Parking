@@ -39,6 +39,10 @@ public class Customer {
     @Column(columnDefinition = "double not null")
     private Double balance;
 
+    private Double fine;
+
+    private Integer points;
+
     @OneToOne
     @MapsId
     @JsonIgnore

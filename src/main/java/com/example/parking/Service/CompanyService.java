@@ -44,6 +44,8 @@ public class CompanyService {
         company.setUser(user);
 
         myUserRepository.save(user);
+//         companyRepository.save(company);
+//         return companyRepository.save(company);
        return companyRepository.save(company);
     }
 
@@ -81,13 +83,15 @@ public class CompanyService {
         for (int i = 0; i < branches.size(); i++) {
             List<Parking> parking = parkingRepository.findAllByBranch(branches.get(i));
             for (int j = 0; j < parking.size(); j++) {
-                List<Booking> bookings = bookingRepository.findAllByParking(parking.get(i));
+                List<Booking> bookings = bookingRepository.findAllByParking(parking.get(j));
                 for (int k = 0; k < bookings.size(); k++) {
-                    if (bookings.get(i).getStatus().equalsIgnoreCase("new")){
+                    if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")){
                         throw new ApiException("Cannot Delete Company where there are Bookings");
                     }
-
+                    bookings.get(k).setParking(null);
                 }
+                parking.get(j).setBranch(null);
+                parkingRepository.delete(parking.get(j));
 
             }
             branches.get(i).setCompany(null);

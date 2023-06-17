@@ -1,10 +1,8 @@
 package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
-import com.example.parking.Model.Branch;
-import com.example.parking.Model.Company;
-import com.example.parking.Model.MyUser;
-import com.example.parking.Model.Parking;
+import com.example.parking.Model.*;
+import com.example.parking.Repository.BookingRepository;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.BranchRepository;
 import com.example.parking.Repository.ParkingRepository;
@@ -21,6 +19,7 @@ public class BranchService {
     private final BranchRepository branchRepository;
     private final CompanyRepository companyRepository;
     private final ParkingRepository parkingRepository;
+    private final BookingRepository bookingRepository;
 
     public List<Branch> getBranches() {
         return branchRepository.findAll();
@@ -36,6 +35,7 @@ public class BranchService {
         }
 
         branch.setCompany(company);
+        //branchRepository.save(branch);
         return branchRepository.save(branch);
 
     }
@@ -64,6 +64,7 @@ public class BranchService {
     }
 
     public void deleteBranch(MyUser user, Integer branchId) {
+//        Company company = user.getCompany();
         Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
             throw new ApiException("Sorry Only Companies can delete Branch");
@@ -75,6 +76,20 @@ public class BranchService {
         }
         if (!Objects.equals(branch.getCompany().getId(), company.getId())){
             throw new ApiException("Not Authorized");
+        }
+        List<Parking> parking = parkingRepository.findAllByBranch(branch);
+        for (int j = 0; j < parking.size(); j++) {
+            List<Booking> bookings = bookingRepository.findAllByParking(parking.get(j));
+            for (int k = 0; k < bookings.size(); k++) {
+                if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")){
+                    throw new ApiException("Cannot Delete Branch where there are Bookings");
+                }
+                bookings.get(k).setParking(null);
+
+            }
+            parking.get(j).setBranch(null);
+            parkingRepository.delete(parking.get(j));
+
         }
 
         branchRepository.delete(branch);

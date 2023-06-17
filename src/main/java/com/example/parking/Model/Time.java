@@ -21,7 +21,7 @@ import java.util.Date;
 public class Time {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -36,8 +36,9 @@ public class Time {
     @JoinColumn(name = "parking_id",referencedColumnName = "id")
     private Parking parking;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "time")
-    @PrimaryKeyJoinColumn
+    @OneToOne
+    @MapsId
+    @JsonIgnore
     private Booking booking;
 
 

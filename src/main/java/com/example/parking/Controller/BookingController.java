@@ -41,9 +41,9 @@ public class BookingController {
         return ResponseEntity.status(200).body("Check Out (Thank You for using ParKing) ");
     }
 
-//    @PutMapping("/checkin/{bookingId}")
-//    public ResponseEntity checkIn(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
-//        bookingService.checkOut(user, bookingId);
-//        return ResponseEntity.status(200).body("Check Out (Thank You for using ParKing) ");
-//    }
+    @PutMapping("/checkin/{bookingId}")
+    public ResponseEntity checkIn(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
+        bookingService.checkIn(user, bookingId);
+        return ResponseEntity.status(200).body("Check In (Thank You for using ParKing) ");
+    }
 }
