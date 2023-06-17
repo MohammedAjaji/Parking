@@ -12,12 +12,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class BookingDTO {
 
+    private Integer bookingId;
     private Integer carId;
     private Integer branchId;
     private String parkingNumber;
+    private Boolean usePoints;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @FutureOrPresent

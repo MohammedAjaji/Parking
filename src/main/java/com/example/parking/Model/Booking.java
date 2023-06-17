@@ -21,7 +21,10 @@ public class Booking {
 
     private Double totalPrice;
 
+    @Column(columnDefinition = "varchar(25) not null check (status='new' or status='active' or status='expired')")
     private String status;
+
+    private Double points;
 
 
     @ManyToOne

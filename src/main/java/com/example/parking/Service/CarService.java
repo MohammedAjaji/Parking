@@ -2,6 +2,7 @@ package com.example.parking.Service;
 
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.Model.*;
+import com.example.parking.Repository.BookingRepository;
 import com.example.parking.Repository.CarRepository;
 import com.example.parking.Repository.CompanyRepository;
 import com.example.parking.Repository.CustomerRepository;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -16,6 +18,7 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
+    private final BookingRepository bookingRepository;
 
 
     public List<Car> getCars() {
@@ -42,6 +45,9 @@ public class CarService {
         if (oldCar == null){
             throw new ApiException("Car Not Found");
         }
+        if (!Objects.equals(car.getCustomer().getUser().getId(), customer.getUser().getId())){
+            throw new ApiException("Not Authorized");
+        }
 
         oldCar.setName(car.getName());
         oldCar.setLicensePlate(car.getLicensePlate());
@@ -59,6 +65,16 @@ public class CarService {
         Car car = carRepository.findCarById(carId);
         if (car == null){
             throw new ApiException("Car Not Found");
+        }
+        if (!Objects.equals(car.getCustomer().getUser().getId(), customer.getUser().getId())){
+            throw new ApiException("Not Authorized");
+        }
+        List<Booking> bookings = bookingRepository.findAllByCar(car);
+        for (int k = 0; k < bookings.size(); k++) {
+            if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")) {
+                throw new ApiException("Cannot Delete cars where there are Bookings");
+            }
+            bookings.get(k).setCar(null);
         }
         carRepository.delete(car);
     }

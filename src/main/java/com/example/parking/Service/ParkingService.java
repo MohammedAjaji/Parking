@@ -56,7 +56,7 @@ public class ParkingService {
             throw new ApiException("Branch Not Found");
         }
 
-        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+        if (!Objects.equals(branch.getCompany().getUser().getId(), company.getUser().getId())){
             throw new ApiException("Not Authorized");
         }
 
@@ -82,7 +82,7 @@ public class ParkingService {
     public void deleteParking(MyUser user, Integer branchId, Integer parkingId) {
         Company company = companyRepository.findCompanyByUser(user);
         if (company == null){
-            throw new ApiException("Sorry Only Companies can delete Branch");
+            throw new ApiException("Sorry Only Companies can delete Parking");
         }
 
         Branch branch = branchRepository.findBranchById(branchId);
@@ -90,7 +90,7 @@ public class ParkingService {
             throw new ApiException("Branch Not Found");
         }
 
-        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+        if (!Objects.equals(branch.getCompany().getUser().getId(), company.getUser().getId())){
             throw new ApiException("Not Authorized");
         }
 

@@ -52,7 +52,7 @@ public class CompanyService {
     public void updateCompany(MyUser user, CompanyDTO companyDTO, Integer companyId){
        Company company = companyRepository.findCompanyById(companyId);
 
-       if (!Objects.equals(user.getCompany().getId(), companyId)){
+       if (!Objects.equals(user.getId(), companyId)){
            throw new ApiException("Not Authorized");
        }
 
@@ -71,7 +71,7 @@ public class CompanyService {
         Company company = companyRepository.findCompanyById(companyId);
 
 
-        if (!Objects.equals(user.getCompany().getId(), companyId)){
+        if (!Objects.equals(user.getId(), companyId)){
             throw new ApiException("Not Authorized");
         }
 
@@ -98,8 +98,10 @@ public class CompanyService {
             branchRepository.delete(branches.get(i));
         }
 
-        companyRepository.delete(company);
-        myUserRepository.delete(user);
+        MyUser oldUser = myUserRepository.findMyUserById(user.getId());
+
+        companyRepository.delete(oldUser.getCompany());
+        myUserRepository.delete(oldUser);
     }
 
     public void changeStatus(MyUser user, Integer companyId, String status){
@@ -134,6 +136,7 @@ public class CompanyService {
         if(company==null){
             throw new ApiException("company not found");
         }
-        return user;
+        MyUser newUser = myUserRepository.findMyUserById(user.getId());
+        return newUser;
     }
 }
