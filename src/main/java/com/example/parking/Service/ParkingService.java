@@ -3,10 +3,7 @@ package com.example.parking.Service;
 import com.example.parking.ApiException.ApiException;
 import com.example.parking.DTO.BookingDTO;
 import com.example.parking.Model.*;
-import com.example.parking.Repository.CompanyRepository;
-import com.example.parking.Repository.ParkingRepository;
-import com.example.parking.Repository.BranchRepository;
-import com.example.parking.Repository.TimeRepository;
+import com.example.parking.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.parameters.P;
@@ -24,6 +21,7 @@ public class ParkingService {
     private final BranchRepository branchRepository;
     private final CompanyRepository companyRepository;
     private final TimeRepository timeRepository;
+    private final BookingRepository bookingRepository;
 
 
     public List<Parking> getParking() {
@@ -99,6 +97,14 @@ public class ParkingService {
         Parking parking = parkingRepository.findParkingById(parkingId);
         if (parking == null){
             throw new ApiException("Parking Not found");
+        }
+        List<Booking> bookings = bookingRepository.findAllByParking(parking);
+        for (int k = 0; k < bookings.size(); k++) {
+            if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")){
+                throw new ApiException("Cannot Delete parking where there are Bookings");
+            }
+            bookings.get(k).setParking(null);
+
         }
 
         parkingRepository.delete(parking);
