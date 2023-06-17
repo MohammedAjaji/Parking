@@ -21,6 +21,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final MyUserRepository myUserRepository;
     private final CarRepository carRepository;
+    private final BookingRepository bookingRepository;
 
 
 
@@ -43,6 +44,8 @@ public class CustomerService {
         customer.setLastName(customerDTO.getLastName());
         customer.setPhoneNum(customerDTO.getPhoneNum());
         customer.setBalance(customerDTO.getBalance());
+        customer.setPoints(0.0);
+        customer.setFine(0.0);
 
         user.setCustomer(customer);
         customer.setUser(user);
@@ -56,7 +59,7 @@ public class CustomerService {
     public void updateCustomer(MyUser user,Integer customerId, CustomerDTO customerDTO){
         Customer oldCustomer = customerRepository.findCustomerById(customerId);
 
-        if (!Objects.equals(user.getCustomer().getId(), customerId)){
+        if (!Objects.equals(user.getId(), customerId)){
             throw new ApiException("Not Authorized");
         }
 
@@ -75,7 +78,7 @@ public class CustomerService {
     public void deleteCustomer(MyUser user,Integer customerId){
         Customer customer = customerRepository.findCustomerById(customerId);
 
-        if (!Objects.equals(user.getCustomer().getId(), customerId)){
+        if (!Objects.equals(user.getId(), customerId)){
             throw new ApiException("Not Authorized");
         }
 
@@ -91,14 +94,15 @@ public class CustomerService {
                 if (bookings.get(k).getStatus().equalsIgnoreCase("new") || bookings.get(k).getStatus().equalsIgnoreCase("active")) {
                     throw new ApiException("Cannot Delete cars where there are Bookings");
                 }
-                bookings.get(k).setParking(null);
+                bookings.get(k).setCar(null);
             }
             cars.get(i).setCustomer(null);
             carRepository.delete(cars.get(i));
         }
+        MyUser oldUser = myUserRepository.findMyUserById(user.getId());
 
-        customerRepository.delete(customer);
-        myUserRepository.delete(user);
+        customerRepository.delete(oldUser.getCustomer());
+        myUserRepository.delete(oldUser);
 
     }
 
@@ -117,7 +121,26 @@ public class CustomerService {
         if(customer==null){
             throw new ApiException("customer not found");
         }
-        return user;
+
+        MyUser newUser = myUserRepository.findMyUserById(user.getId());
+        return newUser;
+    }
+
+    public double payFine(MyUser user, double amount){
+        Customer customer= customerRepository.findCustomerByUser(user);
+        if(customer==null){
+            throw new ApiException("customer not found");
+        }
+        if (amount % 50 != 0){
+            throw new ApiException("amount has to be Multiples of 50");
+        }
+        if (customer.getFine() == 0){
+            throw new ApiException("you are clean don't worry ^_^");
+        }
+        double fine = customer.getFine() - amount;
+        customer.setFine(fine);
+        customerRepository.save(customer);
+        return fine;
     }
 
 //    public List<Booking> getCustomerBooking(MyUser user){

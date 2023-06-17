@@ -52,4 +52,11 @@ public class CustomerController {
         return ResponseEntity.status(200).body(myUser);
     }
 
+    @PutMapping("/pay-fine")
+    public ResponseEntity payFine(@AuthenticationPrincipal MyUser user, @RequestBody double amount){
+        double fine =  customerService.payFine(user, amount);
+        return ResponseEntity.status(200).body("Pay Fine is done " +
+                "\n your fine is now " + fine);
+    }
+
 }

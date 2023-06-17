@@ -41,7 +41,7 @@ public class CompanyController {
     @PutMapping("/update-status/{companyId}")
     public ResponseEntity changeStatus(@AuthenticationPrincipal MyUser user, @RequestBody String status, @PathVariable Integer companyId){
         companyService.changeStatus(user, companyId,status);
-        return ResponseEntity.status(200).body("Company Status Updated");
+        return ResponseEntity.status(200).body("Company Status Updated to " + status);
     }
 
     @GetMapping("/get-branch")

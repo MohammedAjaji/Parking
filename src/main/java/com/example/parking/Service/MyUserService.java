@@ -1,5 +1,6 @@
 package com.example.parking.Service;
 
+import com.example.parking.DTO.AdminDTO;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Repository.MyUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,12 @@ public class MyUserService {
         return users;
     }
 
-    public void addAdmin(MyUser user) {
-        String hash = new BCryptPasswordEncoder().encode(user.getPassword());
+    public void addAdmin(AdminDTO adminDTO) {
+        String hash = new BCryptPasswordEncoder().encode(adminDTO.getPassword());
+        MyUser user = new MyUser();
+
+        user.setUsername(adminDTO.getUsername());
+        user.setEmail(adminDTO.getEmail());
         user.setPassword(hash);
         user.setRole("ADMIN");
         myUserRepository.save(user);

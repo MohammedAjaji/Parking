@@ -20,10 +20,10 @@ public class Admin {
 
     private String name;
 
-    @OneToOne
-//    @MapsId(value = "id")
-    @JsonIgnore
-    private MyUser user;
+//    @OneToOne
+////    @MapsId(value = "id")
+//    @JsonIgnore
+//    private MyUser user;
 
 
 }

@@ -35,11 +35,19 @@ public class SpringConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers("api/v1/auth/register").permitAll()
+                .requestMatchers("api/v1/auth/register-admin",
+                        "api/v1/auth/register-company",
+                        "api/v1/auth/register-customer",
+                        "api/v1/branch/get",
+                        "api/v1/parking/get",
+                        "api/v1/parking/get-time/{branchId}",
+                        "api/v1/parking//get-not-available/{branchId}",
+                        "api/v1/parking//get-available/{branchId}").permitAll()
                 .requestMatchers("api/v1/auth/admin",
                         "api/v1/auth/get-users",
                         "api/v1/customer/get",
                         "api/v1/car/get",
+                        "api/v1/booking/get",
                         "api/v1/company/get",
                         "api/v1/company/delete/{companyId}",
                         "api/v1/company/update-status/{companyId}").hasAuthority("ADMIN")
@@ -48,9 +56,10 @@ public class SpringConfiguration {
                         "api/v1/customer/delete/{customerId}",
                         "api/v1/customer/get-cars",
                         "api/v1/customer/details",
+                        "api/v1/customer/pay-fine",
                         "api/v1/car/add",
                         "api/v1/car/update/{carId}",
-                        "api/v1/car/delete/carId}",
+                        "api/v1/car/delete/{carId}",
                         "api/v1/booking/parking",
                         "api/v1/booking/update/{bookingId}",
                         "api/v1/booking/cancel/{bookingId}",
@@ -66,7 +75,7 @@ public class SpringConfiguration {
                         "api/v1/parking/add/{branchId}",
                         "api/v1/parking/update/{branchId}/{parkingId}",
                         "api/v1/parking/delete/{branchId}/{parkingId}").hasAuthority("COMPANY")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("api/v1/auth/logout")
                 .deleteCookies("JSESSIONID")

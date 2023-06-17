@@ -17,7 +17,13 @@ public interface TimeRepository extends JpaRepository<Time, Integer> {
     Time findTimeByArrivalTimeAndDepartureTime(LocalDateTime a, LocalDateTime d);
 
 
-    @Query("SELECT t FROM Time t WHERE t.arrivalTime <= :startDateTime OR t.departureTime >= :endDateTime")
-    List<Time> findAvailableTimes(LocalDateTime startDateTime, LocalDateTime endDateTime);
+//    @Query("SELECT t FROM Time t WHERE t.arrivalTime <= :startDateTime OR t.departureTime >= :endDateTime")
+    @Query("SELECT t FROM Time t WHERE ((t.arrivalTime = :arrivalTime) OR (t.departureTime = :departureTime) OR (t.arrivalTime < :departureTime AND t.departureTime > :arrivalTime)) AND (t.booking.status != 'expired')")
+    List<Time> findNotAvailableTimes(LocalDateTime arrivalTime, LocalDateTime departureTime);
+
+    @Query("SELECT t FROM Time t WHERE ((t.arrivalTime != :arrivalTime) OR (t.departureTime != :departureTime) OR (t.arrivalTime >= :departureTime AND t.departureTime <= :arrivalTime)) AND (t.booking.status != 'expired')")
+    List<Time> findAvailableTimes(LocalDateTime arrivalTime, LocalDateTime departureTime);
+
+
 
 }

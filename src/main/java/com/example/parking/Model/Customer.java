@@ -41,7 +41,7 @@ public class Customer {
 
     private Double fine;
 
-    private Integer points;
+    private Double points;
 
     @OneToOne
     @MapsId

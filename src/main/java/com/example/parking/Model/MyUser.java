@@ -48,9 +48,9 @@ public class MyUser implements UserDetails {
     @PrimaryKeyJoinColumn
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @PrimaryKeyJoinColumn
-    private Admin admin;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
+//    private Admin admin;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @PrimaryKeyJoinColumn

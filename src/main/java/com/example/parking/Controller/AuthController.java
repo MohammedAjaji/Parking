@@ -1,6 +1,7 @@
 package com.example.parking.Controller;
 
 
+import com.example.parking.DTO.AdminDTO;
 import com.example.parking.DTO.CompanyDTO;
 import com.example.parking.DTO.CustomerDTO;
 import com.example.parking.Model.MyUser;
@@ -31,8 +32,8 @@ public class AuthController {
     }
 
     @PostMapping("/register/admin")
-    public ResponseEntity registerAdmin(@Valid @RequestBody MyUser user){
-        myUserService.addAdmin(user);
+    public ResponseEntity registerAdmin(@Valid @RequestBody AdminDTO adminDTO){
+        myUserService.addAdmin(adminDTO);
         return ResponseEntity.status(200).body("Admin Registered");
     }
 

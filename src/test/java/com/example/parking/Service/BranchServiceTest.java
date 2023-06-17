@@ -34,6 +34,8 @@ class BranchServiceTest {
     private  CompanyRepository companyRepository;
     @Autowired
     private  ParkingRepository parkingRepository;
+    @Autowired
+    private  BookingRepository bookingRepository;
     private  BranchService branchService;
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
@@ -41,7 +43,7 @@ class BranchServiceTest {
 
     @BeforeEach
     void setUp() {
-        branchService=new BranchService(branchRepository,companyRepository,parkingRepository);
+        branchService=new BranchService(branchRepository,companyRepository,parkingRepository,bookingRepository);
     }
 
     @Test

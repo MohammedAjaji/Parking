@@ -51,7 +51,7 @@ public class BranchService {
             throw new ApiException("Branch Not Found");
         }
 
-        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+        if (!Objects.equals(branch.getCompany().getUser().getId(), company.getUser().getId())){
             throw new ApiException("Not Authorized");
         }
 
@@ -74,7 +74,7 @@ public class BranchService {
         if (branch == null){
             throw new ApiException("Branch Not Found");
         }
-        if (!Objects.equals(branch.getCompany().getId(), company.getId())){
+        if (!Objects.equals(branch.getCompany().getUser().getId(), company.getUser().getId())){
             throw new ApiException("Not Authorized");
         }
         List<Parking> parking = parkingRepository.findAllByBranch(branch);
