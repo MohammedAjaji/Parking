@@ -26,7 +26,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public void addCompany(CompanyDTO companyDTO){
+    public Company addCompany(CompanyDTO companyDTO){
         String hash = new BCryptPasswordEncoder().encode(companyDTO.getPassword());
 
         MyUser user = new MyUser();
@@ -44,7 +44,7 @@ public class CompanyService {
         company.setUser(user);
 
         myUserRepository.save(user);
-        companyRepository.save(company);
+       return companyRepository.save(company);
     }
 
     public void updateCompany(MyUser user, CompanyDTO companyDTO, Integer companyId){
