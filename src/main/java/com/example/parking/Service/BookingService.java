@@ -53,21 +53,7 @@ public class BookingService {
             throw new ApiException("Arrival cannot be after Departure ");
         }
         checkAvailableParking(parking,bookingDTO);
-//        List<Time> times = timeRepository.findAllByParking(parking);
-//        for (int i = 0; i < times.size(); i++) {
-//            if (times.get(i).getArrivalTime().equals(bookingDTO.getArrivalTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getDepartureTime().equals(bookingDTO.getDepartureTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getArrivalTime().isBefore(bookingDTO.getArrivalTime()) || times.get(i).getDepartureTime().isAfter(bookingDTO.getArrivalTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getArrivalTime().isBefore(bookingDTO.getDepartureTime()) || times.get(i).getDepartureTime().isAfter(bookingDTO.getDepartureTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//        }
+
         Car car = carRepository.findCarById(bookingDTO.getCarId());
         if (car == null){
             throw new ApiException("Car Not Found");
@@ -109,9 +95,9 @@ public class BookingService {
                 customer.setPoints(0.0);
             }
         }
-        double points = Math.round(totalPrice * 10);
-
-        customer.setPoints(customer.getPoints() + points);
+//        double points = Math.round(totalPrice * 10);
+//
+//        customer.setPoints(customer.getPoints() + points);
         customer.setBalance(customer.getBalance() - totalPrice);
 
         Company company = companyRepository.findCompanyByBranchSetContains(branch);
@@ -121,7 +107,7 @@ public class BookingService {
         booking.setParking(parking);
         booking.setCar(car);
         booking.setTotalPrice(totalPrice);
-        booking.setPoints(points);
+//        booking.setPoints(points);
         booking.setStatus("new");
 
         Time time = new Time();
@@ -137,7 +123,7 @@ public class BookingService {
         List list = new ArrayList<>();
         list.add(totalHours);
         list.add(totalPrice);
-        list.add(points);
+//        list.add(points);
         return list;
     }
 
@@ -339,7 +325,7 @@ public class BookingService {
         for (int i = 0; i < bookings.size(); i++) {
             Duration duration = Duration.between(bookings.get(i).getTime().getDepartureTime(), localDateTime);
             Integer totalMinute = Math.toIntExact(duration.toMinutes());
-            System.out.println("e: " +totalMinute);
+//            System.out.println("e: " +totalMinute);
             logger.info("Total Minutes for Booking: " + bookings.get(i).getId() + " is: " + totalMinute );
             if (totalMinute > 30){
                 if (!(bookings.get(i).getStatus().equalsIgnoreCase("expired"))){
@@ -355,7 +341,8 @@ public class BookingService {
             }
             Duration duration1 = Duration.between(bookings.get(i).getTime().getArrivalTime(), localDateTime);
             Integer totalMinute1 = Math.toIntExact(duration1.toMinutes());
-            System.out.println("a: " +totalMinute1);
+            logger.info("Total Minutes for Booking: " + bookings.get(i).getId() + " is: " + totalMinute1 );
+//            System.out.println("a: " +totalMinute1);
             if (totalMinute1 > 15){
                 if (!(bookings.get(i).getStatus().equalsIgnoreCase("active"))){
                    Double price = bookings.get(i).getTotalPrice() / 2;

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,6 +142,37 @@ public class CustomerService {
         customer.setFine(fine);
         customerRepository.save(customer);
         return fine;
+    }
+    public List<Car> getCustomerBookings(MyUser user){
+        Customer customer = customerRepository.findCustomerByUser(user);
+        if (customer == null) {
+            throw new ApiException("Not Authorized");
+        }
+        List<Car> cars = carRepository.findCarByCustomer(customer);
+        List<Car> carList = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            List<Booking> bookings = bookingRepository.findAllByCar(cars.get(i));
+            if (bookings.get(i) != null && !(bookings.get(i).getStatus().equalsIgnoreCase("expired"))){
+                carList.add(bookings.get(i).getCar());
+            }
+        }
+        return carList;
+    }
+
+    public List<Car> getCustomerOldBookings(MyUser user){
+        Customer customer = customerRepository.findCustomerByUser(user);
+        if (customer == null) {
+            throw new ApiException("Not Authorized");
+        }
+        List<Car> cars = carRepository.findCarByCustomer(customer);
+        List<Car> carList = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            List<Booking> bookings = bookingRepository.findAllByCar(cars.get(i));
+            if (bookings.get(i) != null && bookings.get(i).getStatus().equalsIgnoreCase("expired")){
+                carList.add(bookings.get(i).getCar());
+            }
+        }
+        return carList;
     }
 
 //    public List<Booking> getCustomerBooking(MyUser user){

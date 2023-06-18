@@ -35,9 +35,9 @@ public class SpringConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers("api/v1/auth/register-admin",
-                        "api/v1/auth/register-company",
-                        "api/v1/auth/register-customer",
+                .requestMatchers("api/v1/auth/register/admin",
+                        "api/v1/auth/register/company",
+                        "api/v1/auth/register/customer",
                         "api/v1/branch/get",
                         "api/v1/parking/get",
                         "api/v1/parking/get-time/{branchId}",
@@ -57,6 +57,8 @@ public class SpringConfiguration {
                         "api/v1/customer/get-cars",
                         "api/v1/customer/details",
                         "api/v1/customer/pay-fine",
+                        "api/v1/customer/get-booking",
+                        "api/v1/customer/get-old-booking",
                         "api/v1/car/add",
                         "api/v1/car/update/{carId}",
                         "api/v1/car/delete/{carId}",

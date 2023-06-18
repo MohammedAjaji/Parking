@@ -59,4 +59,16 @@ public class CustomerController {
                 "\n your fine is now " + fine);
     }
 
+    @GetMapping("/get-booking")
+    public ResponseEntity getCustomerBookings(@AuthenticationPrincipal MyUser user){
+        List<Car> cars = customerService.getCustomerBookings(user);
+        return ResponseEntity.status(200).body(cars);
+    }
+
+    @GetMapping("/get-old-booking")
+    public ResponseEntity getCustomerOldBookings(@AuthenticationPrincipal MyUser user){
+        List<Car> cars = customerService.getCustomerOldBookings(user);
+        return ResponseEntity.status(200).body(cars);
+    }
+
 }
