@@ -67,8 +67,9 @@ class BranchServiceTest {
     @Test
     void addBranch_shouldAddBranchForCompany() {
         // Arrange
-        MyUser user = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
-        MyUser savedU=myUserRepository.save(user);
+        MyUser user1 = MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
+        MyUser savedU=myUserRepository.save(user1);
         Company company = Company.builder().revenue(365343.544).status("approved").name("sdgsdg").user(savedU).build();
         Company savedC=companyRepository.save(company);
         Branch branch = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(savedC).build();
@@ -87,9 +88,10 @@ class BranchServiceTest {
     @Test
     void addBranch_shouldThrowExceptionIfUserIsNotCompany() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
-        MyUser user=myUserRepository.save(savedU);
-        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
+        MyUser user1 = MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
+        MyUser user=myUserRepository.save(user1);
+        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(user).build();
         Company company=companyRepository.save(savedC);
         Branch branchT = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(company).build();
 
@@ -102,7 +104,8 @@ class BranchServiceTest {
     @Test
     void updateBranch_shouldUpdateBranchForCompany() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU= MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
         Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
         Company company=companyRepository.save(savedC);
@@ -124,7 +127,8 @@ class BranchServiceTest {
     @Test
     void updateBranch_shouldThrowExceptionIfUserIsNotCompany() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU= MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
         Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
         Company company=companyRepository.save(savedC);
@@ -138,9 +142,10 @@ class BranchServiceTest {
     @Test
     void updateBranch_shouldThrowExceptionIfBranchNotFound() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU= MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
-        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
+        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(user).build();
         Company company=companyRepository.save(savedC);
         Branch branchT = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(company).build();
 
@@ -154,9 +159,10 @@ class BranchServiceTest {
     @Test
     void deleteBranch_shouldDeleteBranchForCompany() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU= MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
-        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
+        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(user).build();
         Company company=companyRepository.save(savedC);
         Branch branchT = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(company).build();
 
@@ -172,9 +178,10 @@ class BranchServiceTest {
     @Test
     void deleteBranch_shouldThrowExceptionIfUserIsNotCompany() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU= MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
-        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
+        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(user).build();
         Company company=companyRepository.save(savedC);
         Branch branchT = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(company).build();
 
@@ -186,9 +193,10 @@ class BranchServiceTest {
     @Test
     void deleteBranch_shouldThrowExceptionIfBranchNotFound() {
         // Arrange
-        MyUser savedU= new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser savedU=MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(savedU);
-        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(savedU).build();
+        Company savedC = Company.builder().revenue(365341.45).status("pending").name("sdgsdg").user(user).build();
         Company company=companyRepository.save(savedC);
         Branch branchT = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").company(company).build();
 

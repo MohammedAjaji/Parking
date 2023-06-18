@@ -110,10 +110,10 @@ public class CompanyServiceTest {
     @Test
     public void testChangeStatus() {
 
-        MyUser user = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "ADMIN", null, null, null);
-        MyUser savedU=myUserRepository.save(user);
+        MyUser savedUser=myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "ADMIN").build());
 
-        companyService.changeStatus(savedU, testCompany.getId(), "Approved");
+        companyService.changeStatus(savedUser, testCompany.getId(), "Approved");
 
         // Verify that the company's status is updated in the database
         Company updatedCompany = companyRepository.findById(testCompany.getId()).orElse(null);

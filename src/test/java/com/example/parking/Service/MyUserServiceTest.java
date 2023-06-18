@@ -1,5 +1,6 @@
 package com.example.parking.Service;
 
+import com.example.parking.DTO.AdminDTO;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Repository.MyUserRepository;
 import com.example.parking.Service.MyUserService;
@@ -36,38 +37,39 @@ class MyUserServiceTest {
     @Test
     void getUsers_ShouldReturnAllUsers() {
         // Given
-        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null, null);
-        MyUser user2 = new MyUser(null, "user2", passwordEncoder.encode("password2"), "user2@example.com", "ADMIN", null, null, null);
-        myUserRepository.save(user1);
-        myUserRepository.save(user2);
+        MyUser user =myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
+        MyUser admin =myUserRepository.save(MyUser.builder().username("admin").password(passwordEncoder.encode("admin1")).email("admin1@example.com")
+                .role( "ADMIN").build());
+        myUserRepository.save(user);
+        myUserRepository.save(admin);
 
         // When
         List<MyUser> users = myUserService.getUsers();
 
         // Then
-        assertEquals(2, users.size());
+        assertEquals(7, users.size());
         // Add more assertions as needed
     }
 
     @Test
     void addAdmin_ShouldAddAdminUser() {
         // Given
-        MyUser admin = new MyUser(null, "admin", "adminPassword", "admin@example.com", "ADMIN", null, null, null);
+        AdminDTO admin = new AdminDTO(1, "admin", "adminPassword99", "admin@example.com");
 
-        // When
         myUserService.addAdmin(admin);
 
         // Then
         List<MyUser> users = myUserService.getUsers();
-        assertEquals(1, users.size());
+        assertEquals(6, users.size());
         // Add more assertions as needed
     }
 
     @Test
     void updateUserPassword_ShouldUpdateUserPassword() {
         // Given
-        MyUser user = new MyUser(null, "user", passwordEncoder.encode("oldPassword"), "user@example.com", "CUSTOMER", null, null, null);
-        myUserRepository.save(user);
+        MyUser user =myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
 
         // When
         myUserService.updateUserPassword(user, "newPassword");
@@ -81,14 +83,14 @@ class MyUserServiceTest {
     @Test
     void updateUserUsername_ShouldUpdateUserUsername() {
         // Given
-        MyUser user = new MyUser(null, "oldUsername", passwordEncoder.encode("password"), "user@example.com", "CUSTOMER", null, null, null);
-        myUserRepository.save(user);
+        MyUser savedUser=myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
 
         // When
-        myUserService.updateUserUsername(user, "newUsername");
+        myUserService.updateUserUsername(savedUser, "newUsername");
 
         // Then
-        MyUser updatedUser = myUserRepository.findById(user.getId()).orElse(null);
+        MyUser updatedUser = myUserRepository.findById(savedUser.getId()).orElse(null);
         assertEquals("newUsername", updatedUser.getUsername());
         // Add more assertions as needed
     }

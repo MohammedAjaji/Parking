@@ -73,10 +73,11 @@ class CarServiceTest {
     @Test
     void addCar_shouldAddCarForCustomer() {
         // Arrange
-        MyUser user = new MyUser(null, "user1",
-                passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
-        myUserRepository.save(user);
+
+
+
+        MyUser user =myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(user).build();;
 
         Car car = new Car();
@@ -102,10 +103,8 @@ class CarServiceTest {
     @Test
     void addCar_shouldThrowExceptionIfUserIsNotCustomer() {
         // Arrange
-        MyUser user = new MyUser(null, "user1",
-                passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
-        myUserRepository.save(user);
+        MyUser user =myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
         Car car = new Car();
         car.setColor("seffs");
         car.setLicensePlate("dsgsgd");
@@ -123,10 +122,9 @@ class CarServiceTest {
     @Test
     void updateCar_shouldThrowExceptionIfCarNotFound() {
         // Arrange
-        MyUser user = new MyUser(null, "user1",
-                passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
-        MyUser savedUser=myUserRepository.save(user);
+
+        MyUser savedUser=myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         Customer savedC=customerRepository.save(customer);
         Car car = new Car();
@@ -136,16 +134,14 @@ class CarServiceTest {
         car.setCustomer(savedC);
         Car savedCar=carRepository.save(car);
         // Act & Assert
-        assertDoesNotThrow(() -> carService.updateCar(user, car, savedCar.getId()));
+        assertDoesNotThrow(() -> carService.updateCar(savedUser, car, savedCar.getId()));
     }
 
     @Test
     void deleteCar_shouldDeleteCarForCustomer() {
         // Arrange
-        MyUser user = new MyUser(null, "user1",
-                passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
-        MyUser savedUser=myUserRepository.save(user);
+        MyUser savedUser=myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         Customer savedC=customerRepository.save(customer);
 
@@ -177,15 +173,13 @@ class CarServiceTest {
     @Test
     void deleteCar_shouldThrowExceptionIfCarNotFound() {
         // Arrange
-        MyUser user = new MyUser(null, "user1",
-                passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
-        MyUser savedUser=myUserRepository.save(user);
+        MyUser savedUser=myUserRepository.save(MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build());
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         customer.setUser(savedUser);
         Customer savedC=customerRepository.save(customer);
 
         // Act & Assert
-        assertThrows(ApiException.class, () -> carService.deleteCar(user, 1));
+        assertThrows(ApiException.class, () -> carService.deleteCar(savedUser, 1));
     }
 }

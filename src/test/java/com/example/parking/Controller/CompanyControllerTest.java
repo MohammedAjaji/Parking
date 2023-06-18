@@ -95,7 +95,7 @@ class CompanyControllerTest {
 
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("Company Status Updated", response.getBody());
+        Assertions.assertEquals("Company Status Updated to Active", response.getBody());
         Mockito.verify(companyService, Mockito.times(1)).changeStatus(user, companyId, status);
     }
 

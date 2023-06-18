@@ -44,7 +44,8 @@ public class BranchRepoTest {
     @Test
     public void testFindBranchesByCompany() {
         // Perform the addCustomer operation
-        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null, null);
+        MyUser user1 = MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(user1);
         Company companyDTO = new Company();
         companyDTO.setName("New Company");

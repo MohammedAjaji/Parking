@@ -42,7 +42,8 @@ public class CustomerRepoTest {
     @Test
     public void testFindCustomerById() {
         // Perform the addCustomer operation
-        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null, null);
+        MyUser user1 = MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser user=myUserRepository.save(user1);
         Customer customerDTO = new Customer();
         customerDTO.setFirstName("mohammed");
@@ -67,7 +68,8 @@ public class CustomerRepoTest {
         customerDTO.setPhoneNum("123456789");
         customerDTO.setBalance(500.0);
 
-        MyUser user = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "COMPANY", null, null, null);
+        MyUser user = MyUser.builder().username("user1").password(passwordEncoder.encode("password1")).email("user1@example.com")
+                .role( "CUSTOMER").build();
         MyUser savedU=myUserRepository.save(user);
         customerDTO.setUser(savedU);
         Customer customer=customerRepository.save(customerDTO);
