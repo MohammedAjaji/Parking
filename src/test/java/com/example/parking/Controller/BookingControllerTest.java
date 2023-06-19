@@ -35,7 +35,7 @@ class BookingControllerTest {
     void bookingParking_shouldReturnBookingDoneMessage() {
         // Arrange
         MyUser user = new MyUser();
-        BookingDTO bookingDTO = new BookingDTO(1,1,"P1", LocalDateTime.now(),LocalDateTime.now().plusHours(2));
+        BookingDTO bookingDTO = new BookingDTO(null,1,1,"P1", false,LocalDateTime.now().plusHours(1),LocalDateTime.now().plusHours(2));
 
         // Act
         ResponseEntity<String> response = bookingController.bookingParking(user, bookingDTO);
@@ -50,7 +50,7 @@ class BookingControllerTest {
     void updateBooking_shouldReturnBookingUpdatedMessage() {
         // Arrange
         MyUser user = new MyUser();
-        BookingDTO bookingDTO = new BookingDTO(1,1,"P1", LocalDateTime.now(),LocalDateTime.now().plusHours(6));
+        BookingDTO bookingDTO = new BookingDTO(null,1,1,"P1",false, LocalDateTime.now(),LocalDateTime.now().plusHours(6));
         Integer bookingId = 1;
 
         // Act

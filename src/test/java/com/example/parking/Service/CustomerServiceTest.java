@@ -55,7 +55,7 @@ public class CustomerServiceTest {
         customerDTO.setUsername("Mohammed");
         customerDTO.setPassword("mohammed@123");
         customerDTO.setEmail("Mohammed@gmail.com");
-        customerService=new CustomerService(customerRepository,myUserRepository,carRepository);
+        customerService=new CustomerService(customerRepository,myUserRepository,carRepository,bookingRepository);
         Customer customer=customerService.addCustomer(customerDTO);
 
         testCustomer = customerRepository.findCustomerById(customer.getId());

@@ -138,6 +138,9 @@ public class CustomerService {
         if (customer.getFine() == 0){
             throw new ApiException("you are clean don't worry ^_^");
         }
+        if (customer.getFine() < amount){
+            throw new ApiException("this amount " + amount +" is more than your fine " + customer.getFine());
+        }
         double fine = customer.getFine() - amount;
         customer.setFine(fine);
         customerRepository.save(customer);

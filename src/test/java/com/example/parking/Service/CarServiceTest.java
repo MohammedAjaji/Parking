@@ -75,7 +75,7 @@ class CarServiceTest {
         // Arrange
         MyUser user = new MyUser(null, "user1",
                 passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
+                "user1@example.com", "CUSTOMER", null, null);
         myUserRepository.save(user);
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(user).build();;
 
@@ -104,7 +104,7 @@ class CarServiceTest {
         // Arrange
         MyUser user = new MyUser(null, "user1",
                 passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
+                "user1@example.com", "CUSTOMER", null, null);
         myUserRepository.save(user);
         Car car = new Car();
         car.setColor("seffs");
@@ -125,7 +125,7 @@ class CarServiceTest {
         // Arrange
         MyUser user = new MyUser(null, "user1",
                 passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
+                "user1@example.com", "CUSTOMER", null, null);
         MyUser savedUser=myUserRepository.save(user);
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         Customer savedC=customerRepository.save(customer);
@@ -144,7 +144,7 @@ class CarServiceTest {
         // Arrange
         MyUser user = new MyUser(null, "user1",
                 passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
+                "user1@example.com", "CUSTOMER", null, null);
         MyUser savedUser=myUserRepository.save(user);
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         Customer savedC=customerRepository.save(customer);
@@ -179,7 +179,7 @@ class CarServiceTest {
         // Arrange
         MyUser user = new MyUser(null, "user1",
                 passwordEncoder.encode("password1"),
-                "user1@example.com", "CUSTOMER", null, null, null);
+                "user1@example.com", "CUSTOMER", null, null);
         MyUser savedUser=myUserRepository.save(user);
         Customer customer = Customer.builder().balance(335453.645).firstName("srgsdgs").phoneNum("gfdwsgdsg").lastName("sgdsgsdg").user(savedUser).build();;
         customer.setUser(savedUser);

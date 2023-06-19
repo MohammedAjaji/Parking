@@ -343,7 +343,7 @@ public class BookingService {
             logger.info("Total Minutes for Booking: " + bookings.get(i).getId() + " is: " + totalMinute1 );
 //            System.out.println("a: " +totalMinute1);
             if (totalMinute1 > 15){
-                if (!(bookings.get(i).getStatus().equalsIgnoreCase("active"))){
+                if (bookings.get(i).getStatus().equalsIgnoreCase("new")){
                    Double price = bookings.get(i).getTotalPrice() / 2;
                    Customer customer = bookings.get(i).getCar().getCustomer();
                    customer.setBalance(customer.getBalance() + price);
@@ -351,7 +351,7 @@ public class BookingService {
                    Time time = bookings.get(i).getTime();
                     time.setParking(null);
 
-                    bookings.get(i).setTime(null);
+//                    bookings.get(i).setTime(null);
                     timeRepository.delete(time);
                     bookingRepository.delete(bookings.get(i));
                 }

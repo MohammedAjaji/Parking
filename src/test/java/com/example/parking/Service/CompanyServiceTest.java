@@ -110,7 +110,7 @@ public class CompanyServiceTest {
     @Test
     public void testChangeStatus() {
 
-        MyUser user = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "ADMIN", null, null, null);
+        MyUser user = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "ADMIN", null, null);
         MyUser savedU=myUserRepository.save(user);
 
         companyService.changeStatus(savedU, testCompany.getId(), "Approved");

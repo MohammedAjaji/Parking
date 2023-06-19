@@ -42,7 +42,7 @@ public class CarRepoTest {
     @Test
     public void testFindCarByCustomer() {
         // Perform the addCustomer operation
-        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null, null);
+        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null);
         MyUser user=myUserRepository.save(user1);
         Customer customerDTO = new Customer();
         customerDTO.setFirstName("mohammed");
