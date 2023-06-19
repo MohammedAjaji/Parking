@@ -17,7 +17,6 @@ import java.util.Set;
 public class Company {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "name cannot be empty ")

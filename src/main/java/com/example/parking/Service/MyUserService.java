@@ -1,6 +1,9 @@
 package com.example.parking.Service;
 
 import com.example.parking.DTO.AdminDTO;
+import com.example.parking.DTO.CustomerDTO;
+import com.example.parking.DTO.PasswordDTO;
+import com.example.parking.DTO.UsernameDTO;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Repository.MyUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,18 +35,18 @@ public class MyUserService {
         myUserRepository.save(user);
     }
 
-    public void updateUserPassword(MyUser myUser, String password) {
+    public void updateUserPassword(MyUser myUser, PasswordDTO passwordDTO) {
         MyUser oldUser = myUserRepository.findMyUserById(myUser.getId());
 
-        String hash = new BCryptPasswordEncoder().encode(password);
+        String hash = new BCryptPasswordEncoder().encode(passwordDTO.getPassword());
         oldUser.setPassword(hash);
         myUserRepository.save(oldUser);
     }
 
-    public void updateUserUsername(MyUser myUser, String username) {
+    public void updateUserUsername(MyUser myUser, UsernameDTO username) {
         MyUser oldUser = myUserRepository.findMyUserById(myUser.getId());
 
-        oldUser.setUsername(username);
+        oldUser.setUsername(username.getUsername());
         myUserRepository.save(oldUser);
     }
 }

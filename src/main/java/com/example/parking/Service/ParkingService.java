@@ -139,13 +139,15 @@ public class ParkingService {
         }
         List<Time> times = timeRepository.findAvailableTimes(bookingDTO.getArrivalTime(), bookingDTO.getDepartureTime());
         List<Parking> parking = new ArrayList<>();
-
+        List<Parking> parkingList = parkingRepository.findAllByBranch(branch);
         for (int i = 0; i < times.size(); i++) {
             if (times.get(i).getParking().getBranch().getId().equals(branchId)){
                 parking.add(times.get(i).getParking());
             }
         }
-        return parking.size();
+        Integer sum = Math.abs(parking.size() - parkingList.size());
+
+        return sum;
     }
 
     public Integer getAvailableParking(BookingDTO bookingDTO, Integer branchId){
@@ -154,7 +156,6 @@ public class ParkingService {
             throw new ApiException("Branch not found");
         }
         List<Time> times = timeRepository.findAvailableTimes(bookingDTO.getArrivalTime(), bookingDTO.getDepartureTime());
-        List<Parking> parkingList = parkingRepository.findAllByBranch(branch);
         List<Parking> parking = new ArrayList<>();
 
         for (int i = 0; i < times.size(); i++) {
@@ -162,9 +163,6 @@ public class ParkingService {
                 parking.add(times.get(i).getParking());
             }
         }
-
-        Integer sum = Math.abs(parking.size() - parkingList.size());
-
-        return sum;
+        return parking.size();
     }
 }

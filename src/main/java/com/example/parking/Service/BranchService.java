@@ -51,7 +51,7 @@ public class BranchService {
             throw new ApiException("Branch Not Found");
         }
 
-        if (!Objects.equals(branch.getCompany().getUser().getId(), company.getUser().getId())){
+        if (!Objects.equals(oldBranch.getCompany().getUser().getId(), company.getUser().getId())) {
             throw new ApiException("Not Authorized");
         }
 

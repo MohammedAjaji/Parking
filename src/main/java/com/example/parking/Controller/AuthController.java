@@ -1,9 +1,7 @@
 package com.example.parking.Controller;
 
 
-import com.example.parking.DTO.AdminDTO;
-import com.example.parking.DTO.CompanyDTO;
-import com.example.parking.DTO.CustomerDTO;
+import com.example.parking.DTO.*;
 import com.example.parking.Model.MyUser;
 import com.example.parking.Service.CompanyService;
 import com.example.parking.Service.CustomerService;
@@ -50,14 +48,14 @@ public class AuthController {
     }
 
     @PutMapping("/update-password")
-    public ResponseEntity updateUserPassword(@AuthenticationPrincipal MyUser myUser, @RequestBody String password){
-        myUserService.updateUserPassword(myUser, password);
+    public ResponseEntity updateUserPassword(@AuthenticationPrincipal MyUser myUser, @Valid @RequestBody PasswordDTO passwordDTO){
+        myUserService.updateUserPassword(myUser, passwordDTO);
         return ResponseEntity.status(200).body("Password Updated");
     }
 
     @PutMapping("/update-username")
-    public ResponseEntity updateUserUsername(@AuthenticationPrincipal MyUser myUser, @RequestBody String username){
-        myUserService.updateUserUsername(myUser, username);
+    public ResponseEntity updateUserUsername(@AuthenticationPrincipal MyUser myUser,@Valid @RequestBody UsernameDTO usernameDTO){
+        myUserService.updateUserUsername(myUser, usernameDTO);
         return ResponseEntity.status(200).body("Username Updated");
     }
 

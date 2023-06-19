@@ -32,8 +32,7 @@ public class BookingController {
         List list = bookingService.bookingParking(user,bookingDTO);
         return ResponseEntity.status(200).body("Booking Done " +
                 "\nTotal Hours is " + list.get(0) +
-                "\nTotal Price is " + list.get(1) +
-                "\nTotal Point is " + list.get(2) );
+                "\nTotal Price is " + list.get(1));
     }
 
     @PutMapping("/update/{bookingId}")

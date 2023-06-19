@@ -45,7 +45,7 @@ public class CarService {
         if (oldCar == null){
             throw new ApiException("Car Not Found");
         }
-        if (!Objects.equals(car.getCustomer().getUser().getId(), customer.getUser().getId())){
+        if (!Objects.equals(oldCar.getCustomer().getUser().getId(), customer.getUser().getId())){
             throw new ApiException("Not Authorized");
         }
 

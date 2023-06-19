@@ -176,7 +176,6 @@ public class BookingService {
             throw new ApiException("Car Not Found");
         }
 
-
         if (!car.getHandicap() && parking.getHandicap()){
             throw new ApiException("Sorry Parking is only for handicap");
         }
@@ -318,7 +317,7 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     public void changeParkingStatus(){
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findAll();

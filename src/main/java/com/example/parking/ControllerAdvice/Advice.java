@@ -94,5 +94,7 @@ public class Advice {
 //        return ResponseEntity.status(400).body(new ApiResponse(msg));
 //    }
 
+    //InvalidDataAccessApiUsageException
+
 
 }

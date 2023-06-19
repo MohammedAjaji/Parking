@@ -50,7 +50,7 @@ public class SpringConfiguration {
                         "api/v1/booking/get",
                         "api/v1/company/get",
                         "api/v1/company/delete/{companyId}",
-                        "api/v1/company/update-status/{companyId}").hasAuthority("ADMIN")
+                        "api/v1/company/update-status/{companyId}/{status}").hasAuthority("ADMIN")
                 .requestMatchers("api/v1/auth/customer",
                         "api/v1/customer/update/{customerId}",
                         "api/v1/customer/delete/{customerId}",
