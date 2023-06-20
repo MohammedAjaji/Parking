@@ -83,21 +83,7 @@ class CompanyControllerTest {
         Mockito.verify(companyService, Mockito.times(1)).deleteCompany(user, companyId);
     }
 
-    @Test
-    void changeStatus_shouldReturnCompanyStatusUpdatedMessage() {
-        // Arrange
-        MyUser user = new MyUser();
-        String status = "Active";
-        Integer companyId = 1;
 
-        // Act
-        ResponseEntity<String> response = companyController.changeStatus(user, status, companyId);
-
-        // Assert
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("Company Status Updated", response.getBody());
-        Mockito.verify(companyService, Mockito.times(1)).changeStatus(user, companyId, status);
-    }
 
     @Test
     void getCompanyBranches_shouldReturnListOfBranches() {

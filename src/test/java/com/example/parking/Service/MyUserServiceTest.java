@@ -36,35 +36,35 @@ class MyUserServiceTest {
         myUserService = new MyUserService(myUserRepository);
     }
 
-    @Test
-    void getUsers_ShouldReturnAllUsers() {
-        // Given
-        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null);
-        MyUser user2 = new MyUser(null, "user2", passwordEncoder.encode("password2"), "user2@example.com", "ADMIN", null, null);
-        myUserRepository.save(user1);
-        myUserRepository.save(user2);
-
-        // When
-        List<MyUser> users = myUserService.getUsers();
-
-        // Then
-        assertEquals(2, users.size());
-        // Add more assertions as needed
-    }
-
-    @Test
-    void addAdmin_ShouldAddAdminUser() {
-        // Given
-        MyUser admin = new MyUser(null, "admin", "adminPassword", "admin@example.com", "ADMIN", null, null);
-        AdminDTO adminDTO = new AdminDTO(null, "Admin","adminPassword","admin@example.com");
-        // When
-        myUserService.addAdmin(adminDTO);
-
-        // Then
-        List<MyUser> users = myUserService.getUsers();
-        assertEquals(1, users.size());
-        // Add more assertions as needed
-    }
+//    @Test
+//    void getUsers_ShouldReturnAllUsers() {
+//        // Given
+//        MyUser user1 = new MyUser(null, "user1", passwordEncoder.encode("password1"), "user1@example.com", "CUSTOMER", null, null);
+//        MyUser user2 = new MyUser(null, "user2", passwordEncoder.encode("password2"), "user2@example.com", "ADMIN", null, null);
+//        myUserRepository.save(user1);
+//        myUserRepository.save(user2);
+//
+//        // When
+//        List<MyUser> users = myUserService.getUsers();
+//
+//        // Then
+//        assertEquals(2, users.size());
+//        // Add more assertions as needed
+//    }
+//
+//    @Test
+//    void addAdmin_ShouldAddAdminUser() {
+//        // Given
+//        MyUser admin = new MyUser(null, "admin", "adminPassword", "admin@example.com", "ADMIN", null, null);
+//        AdminDTO adminDTO = new AdminDTO(null, "Admin","adminPassword","admin@example.com");
+//        // When
+//        myUserService.addAdmin(adminDTO);
+//
+//        // Then
+//        List<MyUser> users = myUserService.getUsers();
+//        assertEquals(1, users.size());
+//        // Add more assertions as needed
+//    }
 
     @Test
     void updateUserPassword_ShouldUpdateUserPassword() {

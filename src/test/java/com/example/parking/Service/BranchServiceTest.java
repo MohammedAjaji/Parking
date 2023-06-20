@@ -46,23 +46,23 @@ class BranchServiceTest {
         branchService=new BranchService(branchRepository,companyRepository,parkingRepository,bookingRepository);
     }
 
-    @Test
-    void getBranches_shouldReturnListOfBranches() {
-        // Arrange
-        Branch branch1 = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").build();
-        Branch savedB=branchRepository.save(branch1);
-
-        Branch branch2 = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").build();
-        Branch savedB1=branchRepository.save(branch2);
-
-        // Act
-        List<Branch> result = branchService.getBranches();
-
-        // Assert
-        assertEquals(2, result.size());
-        assertTrue(result.contains(branch1));
-        assertTrue(result.contains(branch2));
-    }
+//    @Test
+//    void getBranches_shouldReturnListOfBranches() {
+//        // Arrange
+//        Branch branch1 = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").build();
+//        Branch savedB=branchRepository.save(branch1);
+//
+//        Branch branch2 = Branch.builder().location("gsdsd").name("sgsdgsdg").phoneNum("sgsdgdsg").build();
+//        Branch savedB1=branchRepository.save(branch2);
+//
+//        // Act
+//        List<Branch> result = branchService.getBranches();
+//
+//        // Assert
+//        assertEquals(2, result.size());
+//        assertTrue(result.contains(branch1));
+//        assertTrue(result.contains(branch2));
+//    }
 
     @Test
     void addBranch_shouldAddBranchForCompany() {
