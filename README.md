@@ -1,4 +1,4 @@
-# Parking
+# ParKing
 
 The backend APIs for ParKing parking spot booking website provide a set of functionalities to manage various aspects of the system. These APIs allow users to register and authenticate as either a company or a customer.
 
