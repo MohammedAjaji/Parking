@@ -86,14 +86,17 @@ public class BookingService {
         }
 
         if (bookingDTO.getUsePoints()){
-            if (customer.getPoints()/10 > totalPrice){
-                double point = Math.round(customer.getPoints()/10) - totalPrice;
+            if (customer.getPoints()/50 > totalPrice){
+                double point = Math.round(customer.getPoints()/50) - totalPrice;
                 totalPrice = 0;
                 customer.setPoints(point*10);
             }else {
-                totalPrice = totalPrice - Math.round(customer.getPoints() / 10);
+                totalPrice = totalPrice - Math.round(customer.getPoints() / 50);
                 customer.setPoints(0.0);
             }
+        }
+        if (totalPrice > customer.getBalance()){
+            throw new ApiException("Sorry cannot Book a parking balance is not enough");
         }
 //        double points = Math.round(totalPrice * 10);
 //
@@ -309,7 +312,7 @@ public class BookingService {
         LocalDateTime localDateTime = LocalDateTime.now();
         Duration duration = Duration.between(booking.getTime().getArrivalTime(), localDateTime);
         Integer totalMinute = Math.toIntExact(duration.toMinutes());
-        if (totalMinute < 5){
+        if (totalMinute < -5){
             throw new ApiException("Sorry You cannot Activate Before 5 minutes of you arriving time");
         }
 
@@ -382,6 +385,21 @@ public class BookingService {
             }
 
         }
+    }
+    public String getBookingParking(Integer bookingId){
+        Booking booking = bookingRepository.findBookingById(bookingId);
+        if (booking == null){
+            throw new ApiException("Booking not found");
+        }
+        return booking.getParking().getParkingNumber();
+    }
+
+    public String getBookingLocation(Integer bookingId){
+        Booking booking = bookingRepository.findBookingById(bookingId);
+        if (booking == null){
+            throw new ApiException("Booking not found");
+        }
+        return booking.getParking().getBranch().getLocation();
     }
 
 

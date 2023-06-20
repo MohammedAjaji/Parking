@@ -53,7 +53,7 @@ public class BookingController {
     public ResponseEntity checkOut(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
         double points = bookingService.checkOut(user, bookingId);
         return ResponseEntity.status(200).body("Check Out" +
-                "\n Total Price is" + points +
+                "\n Total Points is " + points +
                 " \n(Thank You for using ParKing) ");
     }
 
@@ -61,5 +61,16 @@ public class BookingController {
     public ResponseEntity checkIn(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
         bookingService.checkIn(user, bookingId);
         return ResponseEntity.status(200).body("Check In (Thank You for using ParKing) ");
+    }
+
+    @GetMapping("/get-parking/{bookingId}")
+    public ResponseEntity getBookingParking(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
+       String parking =  bookingService.getBookingParking(bookingId);
+        return ResponseEntity.status(200).body("Parking number is: " + parking);
+    }
+    @GetMapping("/get-location/{bookingId}")
+    public ResponseEntity getBookingLocation(@AuthenticationPrincipal MyUser user, @PathVariable Integer bookingId){
+        String location = bookingService.getBookingLocation(bookingId);
+        return ResponseEntity.status(200).body("location is at: " + location );
     }
 }

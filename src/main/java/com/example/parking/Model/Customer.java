@@ -34,7 +34,7 @@ public class Customer {
     private String phoneNum;
 
     @NotNull(message ="balance should not be empty" )
-    @Positive(message = "please enter positive number")
+//    @Positive(message = "please enter positive number")
     @Column(columnDefinition = "decimal not null")
     private Double balance;
 
