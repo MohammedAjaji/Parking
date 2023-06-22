@@ -32,9 +32,7 @@ public class BookingService {
     private final CompanyRepository companyRepository;
 
     Logger logger = LoggerFactory.getLogger(BookingService.class);
-/*
-        get Bookings BookingDTO
- */
+
 
     public List<Booking> getBookings(){
         return bookingRepository.findAll();
@@ -69,7 +67,6 @@ public class BookingService {
             throw new ApiException("Cannot Booking");
         }
 
-        //bookingDTO.getDepartureTime().getHour() - bookingDTO.getArrivalTime().getHour();
 
         Duration duration = Duration.between(bookingDTO.getArrivalTime(), bookingDTO.getDepartureTime());
         Integer totalHours = Math.toIntExact(duration.toHours());
@@ -98,9 +95,7 @@ public class BookingService {
         if (totalPrice > customer.getBalance()){
             throw new ApiException("Sorry cannot Book a parking balance is not enough");
         }
-//        double points = Math.round(totalPrice * 10);
-//
-//        customer.setPoints(customer.getPoints() + points);
+
         customer.setBalance(customer.getBalance() - totalPrice);
 
         Company company = companyRepository.findCompanyByBranchSetContains(branch);
@@ -159,21 +154,7 @@ public class BookingService {
         }
         bookingDTO.setBookingId(bookingId);
         checkAvailableParking(parking,bookingDTO);
-//        List<Time> times = timeRepository.findAllByParking(parking);
-//        for (int i = 0; i < times.size(); i++) {
-//            if (times.get(i).getArrivalTime().equals(bookingDTO.getArrivalTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getDepartureTime().equals(bookingDTO.getDepartureTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getArrivalTime().isBefore(bookingDTO.getArrivalTime()) && times.get(i).getDepartureTime().isAfter(bookingDTO.getArrivalTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//            if (times.get(i).getArrivalTime().isBefore(bookingDTO.getDepartureTime()) || times.get(i).getDepartureTime().isAfter(bookingDTO.getDepartureTime())){
-//                throw new ApiException("Parking Is Booked");
-//            }
-//        }
+
         Car car = carRepository.findCarById(bookingDTO.getCarId());
         if (car == null){
             throw new ApiException("Car Not Found");
@@ -275,8 +256,7 @@ public class BookingService {
             throw new ApiException("Sorry you cannot check out if you did not check in");
         }
         if (localDateTime.isAfter(booking.getTime().getDepartureTime())){
-//            double min = localDateTime.getMinute() - booking.getTime().getDepartureTime().getMinute();
-//            double time = Math.round(min/60);
+
 
             Duration duration = Duration.between(localDateTime, booking.getTime().getArrivalTime());
             Integer totalHours = Math.toIntExact(duration.toHours());
@@ -320,22 +300,20 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 2000)
     public void changeParkingStatus(){
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findAll();
         for (int i = 0; i < bookings.size(); i++) {
             Duration duration = Duration.between(bookings.get(i).getTime().getDepartureTime(), localDateTime);
             Integer totalMinute = Math.toIntExact(duration.toMinutes());
-//            System.out.println("e: " +totalMinute);
-            logger.info("Total Minutes for Booking: " + bookings.get(i).getId() + " is: " + totalMinute );
+            logger.info("Total Minutes before leaving for Booking: " + bookings.get(i).getId() + " is: " + totalMinute );
             if (totalMinute > 30){
                 if (!(bookings.get(i).getStatus().equalsIgnoreCase("expired"))){
                     bookings.get(i).setStatus("expired");
                     Customer customer = bookings.get(i).getCar().getCustomer();
                     Double fine = customer.getFine();
                     customer.setFine(fine + 50);
-//                    bookings.get(i).getCar().getCustomer().setFine(fine + 50);
                     customerRepository.save(customer);
                     bookingRepository.save(bookings.get(i));
                 }
@@ -343,8 +321,7 @@ public class BookingService {
             }
             Duration duration1 = Duration.between(bookings.get(i).getTime().getArrivalTime(), localDateTime);
             Integer totalMinute1 = Math.toIntExact(duration1.toMinutes());
-            logger.info("Total Minutes for Booking: " + bookings.get(i).getId() + " is: " + totalMinute1 );
-//            System.out.println("a: " +totalMinute1);
+            logger.info("Total Minutes before Arriving for Booking: " + bookings.get(i).getId() + " is: " + totalMinute1 );
             if (totalMinute1 > 15){
                 if (bookings.get(i).getStatus().equalsIgnoreCase("new")){
                    Double price = bookings.get(i).getTotalPrice() / 2;
